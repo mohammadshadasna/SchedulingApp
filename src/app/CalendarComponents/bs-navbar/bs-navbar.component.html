@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-sm navbar-light fixed-top">
+  <a class="navbar-brand" routerLink="/">
+    <img width="100px" height="40px" src="./assets/icons/when-i-work-icon.png"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+  
+    >
+    <!-- aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation" -->
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li ngbDropdown class="nav-item dropdown">
+          <!-- ngbDropdown -->
+        <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown"
+         >
+         <!-- ngbDropdownToggle -->
+         <!-- aria-haspopup="true"
+         aria-expanded="false" -->
+         <b>UserName</b>
+        </a>
+        <div ngbDropdownMenu class="dropdown-menu"
+        >
+        <!-- ngbDropdownMenu -->
+        <!-- aria-labelledby="dropdown01" -->
+          <!-- <a class="dropdown-item" routerLink="">
+            Approve Appointment
+          </a>
+          <a class="dropdown-item" routerLink="">
+            Edit Appointment
+          </a>
+          <a class="dropdown-item" routerLink="">
+            Cancel Appointment
+          </a> -->
+          <a class="dropdown-item" routerLink="">
+            User Profile
+          </a>
+          <a class="dropdown-item">
+            Log Out
+          </a>
+        </div>
+      </li>
+
+    </ul>
+    <p #todaysDate id="todaysDate" class="text-right"><b>{{Date | date:'fullDate'}}</b></p>
+
+  </div>
+</nav>
