@@ -1,48 +1,37 @@
-<nav class="navbar navbar-expand-sm navbar-light fixed-top">
-  <a class="navbar-brand" routerLink="/">
-    <img width="100px" height="40px" src="./assets/icons/when-i-work-icon.png"></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-  
-    >
-    <!-- aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation" -->
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<header class="main-header">
+  <div class="container d-flex justify-content-between align-items-center">
+    <a routerLink="/">
+      <img class="main-header__logo" src="../assets/images/logo.png" alt=""
+    /></a>
 
-  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-    <ul class="navbar-nav mr-auto">
-      <li ngbDropdown class="nav-item dropdown">
-          <!-- ngbDropdown -->
-        <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown"
-         >
-         <!-- ngbDropdownToggle -->
-         <!-- aria-haspopup="true"
-         aria-expanded="false" -->
-         <b>UserName</b>
-        </a>
-        <div ngbDropdownMenu class="dropdown-menu"
-        >
-        <!-- ngbDropdownMenu -->
-        <!-- aria-labelledby="dropdown01" -->
-          <!-- <a class="dropdown-item" routerLink="">
-            Approve Appointment
-          </a>
-          <a class="dropdown-item" routerLink="">
-            Edit Appointment
-          </a>
-          <a class="dropdown-item" routerLink="">
-            Cancel Appointment
-          </a> -->
-          <a class="dropdown-item" routerLink="">
-            User Profile
-          </a>
-          <a class="dropdown-item">
-            Log Out
-          </a>
-        </div>
-      </li>
-
-    </ul>
-    <p #todaysDate id="todaysDate" class="text-right"><b>{{Date | date:'fullDate'}}</b></p>
-
+    <nav class="main-nav">
+      <ul>
+        <li class="main-nav__item">
+          <a routerLink="/" class="main-nav__link">الرئيسية</a>
+        </li>
+        <li class="main-nav__item">
+          <a href="#0" class="main-nav__link">التقارير</a>
+        </li>
+        <li class="main-nav__item">
+          <a href="#0" class="main-nav__link">المواعيد</a>
+        </li>
+      </ul>
+    </nav>
+    <!--
+      <p #todaysDate id="todaysDate" class="text-right">
+        <b>{{ Date | date: "fullDate" }}</b>
+      </p>
+    -->
+    <div class="main-header__user-menu drop-down">
+      <span class="drop-down__current">إسم المستخدم</span>
+      <ul class="drop-down__menu">
+        <li class="drop-down__item">
+          <a href="#0" class="drop-down__link">profile</a>
+        </li>
+        <li class="drop-down__item">
+          <a href="#0" class="drop-down__link">logout</a>
+        </li>
+      </ul>
+    </div>
   </div>
-</nav>
+</header>

@@ -1,67 +1,242 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~fullcalendar/dist/fullcalendar.css";
-
-
+/* arabic */
+@font-face {
+  font-family: "Changa";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Changa"), local("Changa-Regular"),
+    url(https://fonts.gstatic.com/s/changa/v5/2-cm9JNi2YuVOUckY5y-au8.woff2)
+      format("woff2");
+  unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41,
+    U+FB50-FDFF, U+FE80-FEFC;
+}
+/* latin-ext */
+@font-face {
+  font-family: "Changa";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Changa"), local("Changa-Regular"),
+    url(https://fonts.gstatic.com/s/changa/v5/2-cm9JNi2YuVOUckaJy-au8.woff2)
+      format("woff2");
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: "Changa";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Changa"), local("Changa-Regular"),
+    url(https://fonts.gstatic.com/s/changa/v5/2-cm9JNi2YuVOUckZpy-.woff2)
+      format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+/* arabic */
+@font-face {
+  font-family: "Changa";
+  font-style: normal;
+  font-weight: 500;
+  src: local("Changa Medium"), local("Changa-Medium"),
+    url(https://fonts.gstatic.com/s/changa/v5/2-cl9JNi2YuVOUcslb-rUM74nZg.woff2)
+      format("woff2");
+  unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41,
+    U+FB50-FDFF, U+FE80-FEFC;
+}
+/* latin-ext */
+@font-face {
+  font-family: "Changa";
+  font-style: normal;
+  font-weight: 500;
+  src: local("Changa Medium"), local("Changa-Medium"),
+    url(https://fonts.gstatic.com/s/changa/v5/2-cl9JNi2YuVOUcslb-rW874nZg.woff2)
+      format("woff2");
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: "Changa";
+  font-style: normal;
+  font-weight: 500;
+  src: local("Changa Medium"), local("Changa-Medium"),
+    url(https://fonts.gstatic.com/s/changa/v5/2-cl9JNi2YuVOUcslb-rVc74.woff2)
+      format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
 /*styles for full calendar */
-
+html {
+  direction: rtl;
+  font-size: 16px;
+}
 body {
-    padding-top: 80px;
-    font-size: 14px;
-  }
-  
-  .row {
-    margin: 3px;
-  }
-  
-  h2 {
-    font-size: 1.5em !important;
-  }
-  
-  #calendar1 {
-    padding-bottom: 15px;
-    z-index: 950;
-  }
-  
-  #calendar2 {
-    z-index: 900;
-  }
-  
-  
-  .navbar {
-    height: 50px;
-    border-radius: 0;
-  }
-  
-  .fc-body td {
-    cursor: pointer;
-  }
-  
-  
-  .left {
-    float: left;
-  }
-  
-  .fc-event .fc-bg {
-    background-color: #337ab7;
-  }
-  
-  .navbar-btn {
-    margin-right: 15px;
-  }
-  
-  .fc-today .fc-day-number {
-    background: #d9534f;
-    color: white;
-    font-weight: bold;
-    width: 20px;
-    border-radius: 50%;
-    text-align: center;
-    margin: 2px;
-  }
-  
-  .fc-today {
-    background-color: #F2F2F2;
-  }
-  
+  text-align: right;
+  background-color: #f9f9fc;
+  color: #646c9a;
+  font-family: "Changa";
+}
+
+#calendar1 {
+  padding-bottom: 15px;
+  z-index: 950;
+}
+
+#calendar2 {
+  z-index: 900;
+}
+
+.navbar {
+  height: 50px;
+  border-radius: 0;
+}
+
+.fc-body td {
+  cursor: pointer;
+}
+
+.left {
+  float: left;
+}
+
+.fc-event .fc-bg {
+  background-color: #337ab7;
+}
+
+.navbar-btn {
+  margin-right: 15px;
+}
+
+.fc-today .fc-day-number {
+  background: #d9534f;
+  color: white;
+  font-weight: bold;
+  width: 20px;
+  border-radius: 50%;
+  text-align: center;
+  margin: 2px;
+}
+
+.fc-today {
+  background-color: #f2f2f2;
+}
+
 /*end of full calendar styles*/
+@media (min-width: 1500px) {
+  .container {
+    max-width: 1430px;
+  }
+}
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #562588;
+  color: #fff;
+  box-shadow: 0px 0px 40px 0px rgba(82, 63, 105, 0.5);
+  padding: 20px;
+  margin-bottom: 50px;
+}
+.main-header__user-menu {
+  font-size: 14px;
+}
+.main-header__logo {
+  width: 180px;
+}
+.main-nav ul {
+  list-style: none;
+  padding: 0;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+.main-nav__item {
+  padding-right: 10px;
+}
+.main-nav__link {
+  color: #fff;
+  padding: 10px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+.main-nav__link:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  height: 2px;
+  background: #fff;
+  bottom: 0;
+  transition: all 0.3s ease;
+}
+.main-nav__link:hover {
+  color: #eee;
+  text-decoration: none;
+}
+.main-nav__link:hover:after {
+  left: 0;
+  right: 0;
+}
+.dropdown-toggle::after {
+  margin-left: 0;
+  margin-right: 0.255em;
+}
+
+.drop-down {
+  position: relative;
+}
+.drop-down__current {
+  cursor: pointer;
+}
+.drop-down__current:after {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+  margin-left: 0;
+  margin-right: 0.555em;
+}
+.drop-down__menu {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  background: #fff;
+  left: 0;
+  right: 0;
+  top: 100%;
+  list-style: none;
+  font-size: 13px;
+  border-radius: 2px;
+  box-shadow: 1px 1px 1px 1px rgba(51, 51, 51, 0.1);
+  transform: translate(0, 15px);
+  transition: all 0.3s ease;
+}
+
+.drop-down:hover .drop-down__menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, 10px);
+}
+
+.drop-down__link {
+  display: block;
+  color: #6f6f6f;
+  padding: 5px 10px;
+  transition: all 0.3s ease;
+}
+
+.drop-down__link:hover {
+  text-decoration: none;
+  background: rgba(0, 0, 0, 0.03);
+  color: #562588;
+}

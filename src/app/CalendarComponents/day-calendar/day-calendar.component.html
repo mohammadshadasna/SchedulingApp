@@ -1,138 +1,163 @@
-
-<bs-navbar></bs-navbar>
 <div>
-  <div *ngIf="dayCalendarOptions" >
-      
-      <ng-fullcalendar
-        #ucCalendarDay
-         id='ucCalendarRight'
-          [options]="dayCalendarOptions"
-          (dayClick)="dayClick($event.detail)"
-          (eventClick)="eventClick($event.detail)"
-           [(eventsModel)]="events"
-           >
-          </ng-fullcalendar>
+  <div *ngIf="dayCalendarOptions">
+    <ng-fullcalendar
+      #ucCalendarDay
+      id="ucCalendarRight"
+      [options]="dayCalendarOptions"
+      (dayClick)="dayClick($event.detail)"
+      (eventClick)="eventClick($event.detail)"
+      [(eventsModel)]="events"
+    >
+    </ng-fullcalendar>
   </div>
 </div>
 
 <div *ngIf="clickedDate">
-  
-  <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-backdrop fade show"  (click)="clickedDate = !clickedDate"></div>
+  <div
+    class="modal fade show d-block"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div
+      class="modal-backdrop fade show"
+      (click)="clickedDate = !clickedDate"
+    ></div>
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title" id="newEvent">New Apppointment</h4>
-          <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
-          <button type="button" class="close" (click)="clickedDate = !clickedDate" data-dismiss="modal" aria-label="Close">
+          <h4 class="modal-title" id="newEvent">New Apppointment</h4>
+          <!--
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          -->
+          <button
+            type="button"
+            class="close"
+            (click)="clickedDate = !clickedDate"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
 
-        <form #modalForm="ngForm" (ngSubmit) = "OnSubmit(title.value)">
-        <div class="modal-body">
-          <!-- <form> -->
-                <div class="form-group">
-                    <label for="title" ><b>Title</b></label>
-                    <input   
-                    #title="ngModel"
-                    ngModel
-                     name="title"
-                     id="title"
-                     type="text"
-                     class="form-control"
-                     required
-                     >
-                  <div 
-                     class="alert alert-danger"
-                     *ngIf="title.touched && title.invalid"
-                  >
-                     Title is required.
-                  </div>
-                </div>
+        <form #modalForm="ngForm" (ngSubmit)="OnSubmit(title.value)">
+          <div class="modal-body">
+            <!-- <form> -->
+            <div class="form-group">
+              <label for="title"><b>Title</b></label>
+              <input
+                #title="ngModel"
+                ngModel
+                name="title"
+                id="title"
+                type="text"
+                class="form-control"
+                required
+              />
+              <div
+                class="alert alert-danger"
+                *ngIf="title.touched && title.invalid"
+              >
+                Title is required.
+              </div>
+            </div>
             <!-- </form> -->
-        </div>
-        <div class="modal-footer">
-          <!-- <div> -->
+          </div>
+          <div class="modal-footer">
+            <!-- <div> -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="clickedDate = !clickedDate"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              class="btn btn-success"
+              type="submit"
+              [disabled]="!modalForm.valid"
+            >
+              Create Event
+            </button>
+            <!-- </div> -->
+            <!--
+              <div *ngIf="clickedDate">
+                  <button type="button" class="btn btn-danger left" id="delete">Delete Event</button>
+                  <button type="button" class="btn btn-secondary" (click)="clickedDate = !clickedDate" data-dismiss="modal">Cancel</button>
+                  <button
+                   class="btn btn-success"
+                    type="submit"
+                    [disabled] = "!modalForm.valid"
+                    >Update Event</button>
+              </div>
+            -->
+            <!--
               <button type="button" class="btn btn-secondary" (click)="clickedDate = !clickedDate" data-dismiss="modal">Cancel</button>
-              <button  
-               class="btn btn-success"
-               type="submit"
-               [disabled] = "!modalForm.valid"
-              >Create Event</button>
-          <!-- </div> -->
-          <!-- <div *ngIf="clickedDate">
-              <button type="button" class="btn btn-danger left" id="delete">Delete Event</button>
-              <button type="button" class="btn btn-secondary" (click)="clickedDate = !clickedDate" data-dismiss="modal">Cancel</button>
-              <button  
+              <button
                class="btn btn-success"
                 type="submit"
                 [disabled] = "!modalForm.valid"
-                >Update Event</button>
-          </div> -->
-            <!-- <button type="button" class="btn btn-secondary" (click)="clickedDate = !clickedDate" data-dismiss="modal">Cancel</button>
-            <button  
-             class="btn btn-success"
-              type="submit"
-              [disabled] = "!modalForm.valid"
-              >Create Event</button> -->
-        </div>
-      </form>
+                >Create Event</button>
+            -->
+          </div>
+        </form>
       </div>
     </div>
   </div>
-  
 </div>
 
-<!-- <div *ngIf="clickedDate">
-  
-  <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-backdrop fade show"  (click)="clickedDate = !clickedDate"></div>
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title" id="newEvent">New Apppointment</h4>
-          <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" (click)="clickedDate = !clickedDate" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+<!--
+  <div *ngIf="clickedDate">
+
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-backdrop fade show"  (click)="clickedDate = !clickedDate"></div>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title" id="newEvent">New Apppointment</h4>
+            <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" (click)="clickedDate = !clickedDate" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form
+          #modalForm="ngForm"
+           (ngSubmit)="getData(f.value)">
+          <div class="modal-body">
+            <!--<form>
+                  <div class="form-group">
+                      <label for="title" ><b>Title</b></label>
+                      <input
+                      #title="ngModel"
+                      ngModel
+                       name="title"
+                       id="title"
+                       type="text"
+                       class="form-control"
+                       (onfocusout)="getTitle()"
+                       required
+                       >
+                       <div
+                       class="alert alert-danger"
+                       *ngIf="title.touched && title.invalid"
+                       >
+                       Title is required.
+                      </div>
+                  </div>
+              <!--</form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="clickedDate = !clickedDate" data-dismiss="modal">Cancel</button>
+              <button  class="btn btn-success">Create Event</button>
+          </div>
+        </form>
         </div>
-        <form
-        #modalForm="ngForm"
-         (ngSubmit)="getData(f.value)">
-        <div class="modal-body">
-          <!--<form> 
-                <div class="form-group">
-                    <label for="title" ><b>Title</b></label>
-                    <input   
-                    #title="ngModel"
-                    ngModel
-                     name="title"
-                     id="title"
-                     type="text"
-                     class="form-control"
-                     (onfocusout)="getTitle()"
-                     required
-                     >
-                     <div 
-                     class="alert alert-danger"
-                     *ngIf="title.touched && title.invalid"
-                     >
-                     Title is required.
-                    </div>
-                </div>
-            <!--</form> 
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="clickedDate = !clickedDate" data-dismiss="modal">Cancel</button>
-            <button  class="btn btn-success">Create Event</button>
-        </div>
-      </form>
       </div>
     </div>
-  </div>
-  
-</div> -->
 
- 
-        
+  </div>
+-->
