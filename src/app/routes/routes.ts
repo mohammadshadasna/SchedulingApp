@@ -6,6 +6,7 @@ import { SignUpComponent } from "../AuthenticationComponent/sign-up/sign-up.comp
 
 export const appRoutes: Routes = [
   // { path: '', component: SignUpComponent },
+  { path: "test", redirectTo: "/homeCalendar", pathMatch: "full" },
   { path: "", redirectTo: "/homeCalendar", pathMatch: "full" },
   { path: "homeCalendar", component: HomeCalendarComponent },
   { path: "dayCalendar/:date", component: DayCalendarComponent },
