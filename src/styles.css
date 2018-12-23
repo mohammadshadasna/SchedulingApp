@@ -232,6 +232,7 @@ body {
   display: block;
   color: #6f6f6f;
   padding: 5px 10px;
+  cursor: pointer;
   transition: all 0.3s ease;
 }
 
@@ -239,4 +240,12 @@ body {
   text-decoration: none;
   background: rgba(0, 0, 0, 0.03);
   color: #562588;
+}
+.modal-header .close{
+  margin-right: auto;
+  margin-left: 0;
+}
+.modal-footer > :not(:first-child) {
+  margin-right: .25rem;
+  margin-left: 0;
 }

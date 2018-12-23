@@ -1,111 +1,103 @@
-<div class="row">
+ <div class="row">
   <div class="col s8 offset-s2">
     <div class="card">
       <div class="card-header">
 
         <h1>User Registration</h1>
 
-      </div>
-      <!-- [class.has-error]="email.invalid && email.touched" -->
+      </div> 
+      <form #userRegistrationForm="ngForm" (ngSubmit)="OnSubmit(userRegistrationForm)">
       <div class="card-body">
-        <form #userRegistrationForm="ngForm">
-          <!-- <form> -->
             <div class="row">
               <div class="form-group col-sm-6">
-                <label>UserName:</label>
-                <input type="text" id="UserName" name="UserName" #UserName="ngModel" [(ngModel)]="user.UserName" class="form-control"
-                  placeholder="Enter User Name" (change)="log(UserName)" required>
+                <label>username:</label>
+                <input type="text"
+                 id="UserName"
+                  name="UserName"
+                   #UserName="ngModel"
+                    [(ngModel)]="user.UserName"
+                     class="form-control"
+                     (change)="log(UserName)"
+                  placeholder="Enter User Name"
+                   required>
                 <div class="alert alert-danger" *ngIf="UserName.touched && UserName.invalid">
                   Title is required.
                 </div>
               </div>
               <div class="form-group col-sm-6"
-              
-              >
-                  <!-- <label class="control-label">Email:</label> -->
+              >  
                   <label>Email:</label>
                   <input type="email"
-                   name="email"
-                   #email="ngModel"                   
+                  id="Email"
+                   name="Email"
+                   #Email="ngModel"                   
                    [(ngModel)]="user.Email"
                    class="form-control"                   
                    placeholder="Enter email"
                     required email
                     >
                    <div class="alert alert-danger"
-                   *ngIf="email.errors?.required && email.touched"
+                   *ngIf="Email.errors?.required && Email.touched"
                    >
-                   <!-- <div class="alert alert-danger" using safe navigation operator (?) instead of using condition email.errors for checking null or undefined value 
-                   *ngIf=" email.errors && email.errors.required && email.touched"
-                   > -->
+                   
                    Email is required..
                    </div>
                    <div class="alert alert-danger"
-                   *ngIf=" email.errors?.email && email.touched"
+                   *ngIf=" Email.errors?.email && Email.touched"
                    >
-                   <!-- <div class="alert alert-danger" above using safe navigation operator i.e. "?"
-                   *ngIf="email.errors && email.errors.email && email.touched"
-                   > -->
+                   
                    Email is invalid..
                    </div>
-                </div>
+              </div>
             
-              <!-- <div class="form-group col-sm-6">
-                <label>Password:</label>
-                <input id="password" type="password" class="form-control" #password="ngModel" [(ngModel)]="user.Password"
-                  placeholder="Enter password" name="password" required>
-                <div class="alert alert-danger" *ngIf="password.touched && password.invalid">
-                  This field is required!
-                </div>
-              </div> -->
+              
             </div>
-            <div class="row" 
-               ngModelGroup="passwordGroup"[class.has-error]="confirmpass.touched && confirmpass.invalid && !confirmpass.errors?.required">
+            <div class="row" >
+                
                 <div class="form-group col-sm-6">
                     <label>Password:</label>
-                    <input id="password"
+                    <input 
+                    id="Password"
                      type="password"
+                     name="Password"
                       class="form-control"
-                       #password="ngModel"
+                       #Password="ngModel"
                       [(ngModel)]="user.Password"
-                      placeholder="Enter password"
-                       name="password"
+                      placeholder="Enter password" 
                         required
                         >
-                    <div class="alert alert-danger" *ngIf="password.touched && password.invalid && password.errors?.required">
+                    <div class="alert alert-danger" *ngIf="Password.touched && Password.invalid && Password.errors?.required">
                       This Password is required..
                     </div>
                     <div class="alert alert-danger" 
-                  *ngIf="password.touched  && password.errors?.notEqual && !password.errors?.required">
+                  *ngIf="Password.touched  && Password.errors?.notEqual && !Password.errors?.required">
                     Password and Confirm Password does not match..
                   </div>
                   </div>
               <div class="form-group col-sm-6" 
               >
-              <!-- ngModelGroup="passwordGroup" [class.has-error]="confirmpass.touched && confirmpass.invalid && !confirmpass.errors?.required" -->
+              
                 <label>Confirm Password:</label>
                 <input type="text"
-                 name="confirmpass"
-                  #confirmpass="ngModel"
+                id="ConfirmPassword"
+                 name="ConfirmPassword"
+                  #ConfirmPassword="ngModel"
                    [(ngModel)]="user.ConfirmPassword"
                     class="form-control"
                   placeholder="Re-enter password"
-                   passConfirmEqualValidator="password"
+                   passConfirmEqualValidator="Password"
                     required>
-                  <div class="alert alert-danger" *ngIf="confirmpass.touched && confirmpass.errors?.required">
+                  <div class="alert alert-danger" *ngIf="ConfirmPassword.touched && ConfirmPassword.errors?.required">
                     Confirm Password is required..
                   </div>                 
                   <div class="alert alert-danger" 
-                  *ngIf="confirmpass.touched  && confirmpass.errors?.notEqual && !confirmpass.errors?.required">
+                  *ngIf="ConfirmPassword.touched  && ConfirmPassword.errors?.notEqual && !ConfirmPassword.errors?.required">
                     Password and Confirm Password does not match..
                   </div>
-                <!-- </div> -->
+                
               </div>
               
-              <!-- <div class="form-group col-sm-6">
-                <label>Email:</label>
-                <input type="email" name="email" #email="ngModel" [(ngModel)]="user.Email" class="form-control" placeholder="Enter email">
-              </div> -->
+              
             </div>
             <div class="row">
           <div class="form-group col-sm-6">
@@ -123,22 +115,142 @@
               <div class="alert alert-danger" *ngIf="LastName.touched && LastName.invalid">Field is Required..</div>
           </div>
         </div>
-          <!-- <div class="form-group form-check">
-          <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="remember"> Remember me
-          </label>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button> -->
-        </form>
+          
       </div>
       <div class="card-footer">
-        <!-- <div class="form-group form-check">
-          <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="remember"> Remember me
-          </label>
-        </div> -->
+        
         <button type="submit" style="width:100%" class="btn btn-success" [disabled] = "!userRegistrationForm.valid">Submit</button>
       </div>
+    </form>
     </div>
   </div>
 </div>
+
+
+
+
+
+
+<!-- <div class="row">
+  <div class="col s8 offset-s2">
+    <div class="card">
+      <div class="card-header">
+
+        <h1>User Registration</h1>
+
+      </div> 
+      <form [formGroup]="userRegistrationForm"  (ngSubmit)="OnSubmit()">
+      <div class="card-body">
+            <div class="row">
+              <div class="form-group col-sm-6">
+                <label for="username">UserName:</label>
+                <input type="text"
+                formControlName="username"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+                <div class="alert alert-danger" *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                    <div *ngIf="f.username.errors.required">Username is required</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-6"
+              >
+                  
+                  <label>Email:</label>
+                  <input type="email"
+                  id="Email"
+                   name="Email"
+                   #Email="ngModel"                   
+                   [(ngModel)]="user.Email"
+                   class="form-control"                   
+                   placeholder="Enter email"
+                    required email
+                    >
+                   <div class="alert alert-danger"
+                   *ngIf="Email.errors?.required && Email.touched"
+                   >
+                   
+                   Email is required..
+                   </div>
+                   <div class="alert alert-danger"
+                   *ngIf=" Email.errors?.email && Email.touched"
+                   >
+                   
+                   Email is invalid..
+                   </div>
+              </div>
+            
+              
+            </div>
+            <div class="row" >
+                
+                <div class="form-group col-sm-6">
+                    <label>Password:</label>
+                    <input 
+                    id="Password"
+                     type="password"
+                     name="Password"
+                      class="form-control"
+                       #Password="ngModel"
+                      [(ngModel)]="user.Password"
+                      placeholder="Enter password" 
+                        required
+                        >
+                    <div class="alert alert-danger" *ngIf="Password.touched && Password.invalid && Password.errors?.required">
+                      This Password is required..
+                    </div>
+                    <div class="alert alert-danger" 
+                  *ngIf="Password.touched  && Password.errors?.notEqual && !Password.errors?.required">
+                    Password and Confirm Password does not match..
+                  </div>
+                  </div>
+              <div class="form-group col-sm-6" 
+              >
+              
+                <label>Confirm Password:</label>
+                <input type="text"
+                id="ConfirmPassword"
+                 name="ConfirmPassword"
+                  #ConfirmPassword="ngModel"
+                   [(ngModel)]="user.ConfirmPassword"
+                    class="form-control"
+                  placeholder="Re-enter password"
+                   passConfirmEqualValidator="Password"
+                    required>
+                  <div class="alert alert-danger" *ngIf="ConfirmPassword.touched && ConfirmPassword.errors?.required">
+                    Confirm Password is required..
+                  </div>                 
+                  <div class="alert alert-danger" 
+                  *ngIf="ConfirmPassword.touched  && ConfirmPassword.errors?.notEqual && !ConfirmPassword.errors?.required">
+                    Password and Confirm Password does not match..
+                  </div>
+                
+              </div>
+              
+              
+            </div>
+            <div class="row">
+          <div class="form-group col-sm-6">
+            <label>FirstName:</label>
+            <input type="text" name="FirstName" #FirstName="ngModel"
+             [(ngModel)]="user.FirstName" class="form-control"
+              placeholder="Enter FirstName" required>
+              <div class="alert alert-danger" *ngIf="FirstName.touched && FirstName.invalid">Field is required..</div>
+          </div>
+          <div class="form-group col-sm-6">
+            <label>LastName:</label>
+            <input type="text" name="LastName" #LastName="ngModel"
+             [(ngModel)]="user.LastName" class="form-control"
+              placeholder="Enter LastName" required>
+              <div class="alert alert-danger" *ngIf="LastName.touched && LastName.invalid">Field is Required..</div>
+          </div>
+        </div>
+          
+      </div>
+      <div class="card-footer">
+        
+        <button type="submit" style="width:100%" class="btn btn-success" [disabled] = "!userRegistrationForm.valid">Submit</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div> -->

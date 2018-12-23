@@ -30,7 +30,8 @@
     "moment": "^2.20.1",
     "ng-fullcalendar": "^1.6.1",
     "ng2-validation": "^4.2.0",
-    "rxjs": "^6.2.2",
+    "ngx-toastr": "^9.1.1",
+    "rxjs": "^6.3.3",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

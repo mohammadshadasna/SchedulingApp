@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'bs-navbar',
@@ -7,11 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BsNavbarComponent implements OnInit {
    Date = new Date();
-  constructor() {
+  constructor(private router : Router) {
     //this.Date = new Date();
    }
 
   ngOnInit() {
+  }
+  Logout(){
+    localStorage.removeItem('userToken');
+    this.router.navigate(['']);
   }
 
 }

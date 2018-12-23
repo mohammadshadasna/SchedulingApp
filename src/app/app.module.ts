@@ -2,7 +2,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {RouterModule} from '@angular/router';
+import { ReactiveFormsModule }    from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {CustomFormsModule} from 'ng2-validation';
 import {HttpClientModule} from '@angular/common/http';
@@ -14,11 +15,14 @@ import { BsNavbarComponent } from './CalendarComponents/bs-navbar/bs-navbar.comp
 import { NotFoundComponent } from './not-found/not-found.component';
 import { DayCalendarComponent } from './CalendarComponents/day-calendar/day-calendar.component';
 import { NewEventService } from './services/new-event.service';
-import { appRoutes } from './routes/routes';
 import { EventService } from './services/event.service';
 import { SignUpComponent } from './AuthenticationComponent/sign-up/sign-up.component';
 import { ConfirmEqualValidatorDirective } from './shared/confirm-email-validator.directive';
-
+import { UserService } from './services/user.service';
+import {ToastrModule} from 'ngx-toastr';
+import { SignInComponent } from './AuthenticationComponent/sign-in/sign-in.component';
+import { AppRoutingModule } from './/app-routing.module';
+//import { RegisterComponent } from './AuthenticationComponent/register/register.component';
 
 @NgModule({
   declarations: [
@@ -28,29 +32,23 @@ import { ConfirmEqualValidatorDirective } from './shared/confirm-email-validator
     NotFoundComponent,
     DayCalendarComponent,
     SignUpComponent,
-    ConfirmEqualValidatorDirective
+    ConfirmEqualValidatorDirective,
+    SignInComponent
+    //RegisterComponent
+    
     
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
     FullCalendarModule,
     CustomFormsModule,
     NgbModule.forRoot(),
-    //RouterModule.forRoot(appRoutes),
-    RouterModule.forRoot([
-      { path: '', component: SignUpComponent },
-      //{ path: '', redirectTo: '/homeCalendar', pathMatch: 'full' },
-//{ path: '', component: HomeCalendarComponent },
-      { path: 'homeCalendar', component: HomeCalendarComponent },
-      { path: 'dayCalendar/:date', component: DayCalendarComponent },
-      //{path:'dayCalendar/:model', component:DayCalendarComponent},
-      // {path:'components/Admin/approve', component:ApproveAppointmentComponent},
-      // {path:'components/Admin/edit', component:EditAppointmentComponent},
-      // {path:'components/Admin/cancel', component:CancelAppointmentComponent}
-      { path: '**', component: NotFoundComponent }
-    ]),
-    FormsModule
+    FormsModule,
+    AppRoutingModule
 
     
   ],
@@ -60,7 +58,8 @@ import { ConfirmEqualValidatorDirective } from './shared/confirm-email-validator
   ],
   providers: [
     EventService,
-    NewEventService
+    NewEventService,
+    UserService
   ]
 })
 export class AppModule { }

@@ -7,13 +7,13 @@
     <nav class="main-nav">
       <ul>
         <li class="main-nav__item">
-          <a routerLink="/" class="main-nav__link">الرئيسية</a>
+          <a routerLink="/homeCalendar" class="main-nav__link">الرئيسية</a>
         </li>
         <li class="main-nav__item">
-          <a href="#0" class="main-nav__link">التقارير</a>
+          <a routerLink="#0" class="main-nav__link">التقارير</a>
         </li>
         <li class="main-nav__item">
-          <a href="#0" class="main-nav__link">المواعيد</a>
+          <a routerLink="#0" class="main-nav__link">المواعيد</a>
         </li>
       </ul>
     </nav>
@@ -26,10 +26,11 @@
       <span class="drop-down__current">إسم المستخدم</span>
       <ul class="drop-down__menu">
         <li class="drop-down__item">
-          <a href="#0" class="drop-down__link">profile</a>
+          <a routerLink="#0" class="drop-down__link">profile</a>
         </li>
         <li class="drop-down__item">
-          <a href="#0" class="drop-down__link">logout</a>
+          <!-- <a routerLink="" class="drop-down__link" (click)="Logout">logout</a> -->
+          <span class="drop-down__link" (click)="Logout()">logout</span>
         </li>
       </ul>
     </div>
