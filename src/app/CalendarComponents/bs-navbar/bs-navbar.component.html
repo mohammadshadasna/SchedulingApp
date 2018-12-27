@@ -15,6 +15,9 @@
         <li class="main-nav__item">
           <a routerLink="#0" class="main-nav__link">المواعيد</a>
         </li>
+        <li class="main-nav__item" *ngIf="authService.roleMatch(['SuperAdmin']) || authService.roleMatch(['Admin']) ">
+          <a routerLink="/test" class="main-nav__link">test</a>
+        </li>
       </ul>
     </nav>
     <!--
@@ -22,14 +25,21 @@
         <b>{{ Date | date: "fullDate" }}</b>
       </p>
     -->
-    <div class="main-header__user-menu drop-down">
+    <!-- <ng-template #anonymousUser>  -->
+      <div class="main-header__user-menu" *ngIf="!isLoggedIn">
+        <a routerLink="/" class="main-nav__link">تسجيل الدخول</a>
+      </div>
+     <!-- </ng-template> -->
+    <div class="main-header__user-menu drop-down" *ngIf="isLoggedIn">
+        <!-- *ngIf="userClaims" -->
       <span class="drop-down__current">إسم المستخدم</span>
+      <!-- <span class="drop-down__current">{{userClaims.UserName}}</span> -->
       <ul class="drop-down__menu">
         <li class="drop-down__item">
           <a routerLink="#0" class="drop-down__link">profile</a>
         </li>
         <li class="drop-down__item">
-          <!-- <a routerLink="" class="drop-down__link" (click)="Logout">logout</a> -->
+          <!-- <a class="drop-down__link" (click)="Logout">logout</a> -->
           <span class="drop-down__link" (click)="Logout()">logout</span>
         </li>
       </ul>

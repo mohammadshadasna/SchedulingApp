@@ -22,6 +22,12 @@ import { UserService } from './services/user.service';
 import {ToastrModule} from 'ngx-toastr';
 import { SignInComponent } from './AuthenticationComponent/sign-in/sign-in.component';
 import { AppRoutingModule } from './/app-routing.module';
+import { AuthService } from './services/auth.service';
+import { TestComponent } from './Admin/test/test.component';
+import { ForbiddenComponent } from './AuthenticationComponent/forbidden/forbidden.component';
+import { MonthlyReportsComponent } from './Reports/monthly-reports/monthly-reports.component';
+import { IndexComponent } from './CalendarComponents/index/index.component';
+import { DepartmentService } from './services/department.service';
 //import { RegisterComponent } from './AuthenticationComponent/register/register.component';
 
 @NgModule({
@@ -33,7 +39,11 @@ import { AppRoutingModule } from './/app-routing.module';
     DayCalendarComponent,
     SignUpComponent,
     ConfirmEqualValidatorDirective,
-    SignInComponent
+    SignInComponent,
+    TestComponent,
+    ForbiddenComponent,
+    MonthlyReportsComponent,
+    IndexComponent
     //RegisterComponent
     
     
@@ -59,7 +69,9 @@ import { AppRoutingModule } from './/app-routing.module';
   providers: [
     EventService,
     NewEventService,
-    UserService
+    UserService,
+    AuthService,
+    DepartmentService
   ]
 })
 export class AppModule { }

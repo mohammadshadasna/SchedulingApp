@@ -3,6 +3,8 @@ import { User } from '../../models/user.model';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import {ToastrService} from 'ngx-toastr';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sign-up',
@@ -12,15 +14,25 @@ import {ToastrService} from 'ngx-toastr';
 export class SignUpComponent implements OnInit {
   user:User;
   emailPattern = "^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
-
-  constructor(private userService : UserService, private toastrService : ToastrService) {
-    this.user = new User('','','','','','');
+  roles : any[];
+  constructor(
+     private userService : UserService,
+     private authService : AuthService,
+     private toastrService : ToastrService,
+     private router : Router
+     ) {
+    this.user = new User('','','','','','','');
    }
 
    
 
   ngOnInit() {
     this.resetForm();
+    this.authService.getAllRoles().subscribe((data : any)=>{
+      data.forEach(obj => obj.selected = false);
+      this.roles = data;
+      
+    });
     
     }
 
@@ -33,18 +45,23 @@ export class SignUpComponent implements OnInit {
       ConfirmPassword:'',
       Email: '',
       FirstName: '',
-      LastName: ''
+      LastName: '',
+      //Roles: []
+      Roles: ''
     }
   }
 
   OnSubmit(form: NgForm) {
-    console.log(form);
-   this.userService.registerUser(form.value)
+    //console.log(form);
+   //var roles = this.roles.filter(x=> x.selected).map(y => y.Name);
+   let roles: string = 'Registered';
+   this.userService.registerUser(form.value,roles)
    .subscribe((data : any)=>{
      if(data.Succeeded == true)
      {
      this.resetForm(form);
      this.toastrService.success('user registration successfull');
+     this.router.navigate(['/']);
     }
     else{
       this.toastrService.error(data.Errors[0]);
@@ -53,9 +70,9 @@ export class SignUpComponent implements OnInit {
    ;
   }
 
-    log(x){
-      console.log(x);
-    }
+    // log(x){
+    //   console.log(x);
+    // }
 
 
    

@@ -4,6 +4,7 @@ import { CalendarComponent } from 'ng-fullcalendar';
 //import { EventSesrvice } from '../../event.service';
 import { Router } from '@angular/router';
 import { EventService } from '../../services/event.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'home-calendar',
@@ -16,16 +17,21 @@ export class HomeCalendarComponent implements OnInit {
   displayEvent: any;
   events = null;
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
-  
+  // userClaims : any;
   constructor(
     //private eventService: EventSesrvice,
     private eventService : EventService,
-    private router : Router
+    private router : Router,
+    private userService : UserService
     ) {
       
      }
 
   ngOnInit() {
+  //   this.userService.getUserClaims().subscribe((data : any)=>{
+  //     this.userClaims = data;
+  //     console.log(this.userClaims);
+  // });
     //this.eventService.getAllAppointments().subscribe((data:any) => {
 
     this.eventService.getEvents().subscribe(data => {

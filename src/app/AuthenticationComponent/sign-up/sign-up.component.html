@@ -17,7 +17,6 @@
                    #UserName="ngModel"
                     [(ngModel)]="user.UserName"
                      class="form-control"
-                     (change)="log(UserName)"
                   placeholder="Enter User Name"
                    required>
                 <div class="alert alert-danger" *ngIf="UserName.touched && UserName.invalid">

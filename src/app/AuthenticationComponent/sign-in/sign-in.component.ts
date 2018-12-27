@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-//import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginUser } from '../../models/loginUser.model';
-import { UserService } from '../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'sign-in',
@@ -11,69 +10,60 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
-    loginUser : LoginUser
+    loginUser : LoginUser;
+    userClaims : any;
     isLoginError : boolean = false;
-    // loginForm: FormGroup;
-    // loading = false;
-    // submitted = false;
-    // returnUrl: string;
+    
 
     constructor(
-        private userService : UserService,
-        // private formBuilder: FormBuilder,
-        // private route: ActivatedRoute,
-         private router: Router,
-        //private authenticationService: AuthenticationService,
-        //private alertService: AlertService
+       // private userService : UserService,
+        private authService : AuthService,
+         private router: Router
+
         ) {
             this.loginUser = new LoginUser('','');
         }
 
     ngOnInit() {
-        // this.loginForm = this.formBuilder.group({
-        //     username: ['', Validators.required],
-        //     password: ['', Validators.required]
+        // this.authService.getUserClaims().subscribe((data : any)=>{
+        //     this.userClaims = data;
         // });
-
-        // // reset login status
-        // //this.authenticationService.logout();
-
-        // // get return url from route parameters or default to '/'
-        // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
-    OnSubmit(username,password){
-        this.userService.userAuthentication(username,password).subscribe((data : any)=>{
+    // getUserCredentials(){
+    //     // this.userService.getUserClaims().subscribe((data : any)=>{
+    //         this.authService.getUserClaims().subscribe((data : any)=>{
+    //         this.userClaims = data;
+    //         localStorage.setItem('userCredentials',this.userClaims);
+    //         console.log(this.userClaims);
+    //     });
+    // }
+
+    OnSubmit(username : string,password : string){
+        // this.userService.userAuthentication(username,password).subscribe((data : any)=>{
+        this.authService.login(username,password)
+        .subscribe((data : any)=>{
         localStorage.setItem('userToken',data.access_token);
+        localStorage.setItem('userRoles',data.role);
         this.router.navigate(['/homeCalendar']);
+        //neeche ka code tab use karenge jab index page design kar liye honge
+        // console.log(data.role);
+        // if(this.authService.roleMatch(['SuperAdmin']))
+        
+        // {
+        //     this.router.navigate(['/homeCalendar']);
+        // }
+        // else{     
+        // this.router.navigate(['/index']);
+        // }
+        
         },
         (err : HttpErrorResponse)=>{
             this.isLoginError = true;
         });
+        
     }
 
-    // convenience getter for easy access to form fields
-    // get f() { return this.loginForm.controls; }
-
-    // onSubmit() {
-    //     this.submitted = true;
-
-    //     // stop here if form is invalid
-    //     if (this.loginForm.invalid) {
-    //         return;
-    //     }
-
-        //this.loading = true;
-        // this.authenticationService.login(this.f.username.value, this.f.password.value)
-        //     .pipe(first())
-        //     .subscribe(
-        //         data => {
-        //             this.router.navigate([this.returnUrl]);
-        //         },
-        //         error => {
-        //             this.alertService.error(error);
-        //             this.loading = false;
-        //         });
-   // }
+    
 
 }

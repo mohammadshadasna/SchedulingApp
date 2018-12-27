@@ -5,6 +5,10 @@ import { SignUpComponent } from './AuthenticationComponent/sign-up/sign-up.compo
 import { HomeCalendarComponent } from './CalendarComponents/home-calendar/home-calendar.component';
 import { DayCalendarComponent } from './CalendarComponents/day-calendar/day-calendar.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { AuthGuard } from './guards/auth.guard';
+import { TestComponent } from './Admin/test/test.component';
+import { ForbiddenComponent } from './AuthenticationComponent/forbidden/forbidden.component';
+import { IndexComponent } from './CalendarComponents/index/index.component';
 //import { RegisterComponent } from './AuthenticationComponent/register/register.component';
 
 
@@ -12,8 +16,11 @@ const appRoutes : Routes = [
   { path: '', component: SignInComponent },
   //{path:'register', component:RegisterComponent},
   { path: 'signUp', component: SignUpComponent },
-  { path: 'homeCalendar', component: HomeCalendarComponent },
-  { path: 'dayCalendar/:date', component: DayCalendarComponent },
+  { path: 'index', component:IndexComponent},
+  {path: 'forbidden', component: ForbiddenComponent,canActivate: [AuthGuard]},
+  { path: 'test', component: TestComponent,canActivate:[AuthGuard],data: {roles: ['SuperAdmin','Admin']} },
+  { path: 'homeCalendar', component: HomeCalendarComponent,canActivate:[AuthGuard] },
+  { path: 'dayCalendar/:date', component: DayCalendarComponent,canActivate:[AuthGuard] },
   { path: "**", component: NotFoundComponent }
 ];
 
@@ -21,6 +28,7 @@ const appRoutes : Routes = [
   imports: [
     RouterModule.forRoot(appRoutes),
   ],
+  providers:[AuthGuard],
   exports: [RouterModule]
  
 })
