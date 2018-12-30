@@ -48,7 +48,6 @@
     U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
     U+FEFF, U+FFFD;
 }
-/*styles for full calendar */
 html {
   direction: rtl;
   font-size: 16px;
@@ -60,6 +59,7 @@ body {
   font-family: "Tajawal";
 }
 
+/*styles for full calendar 
 #calendar1 {
   padding-bottom: 15px;
   z-index: 950;
@@ -74,9 +74,6 @@ body {
   border-radius: 0;
 }
 
-.fc-body td {
-  cursor: pointer;
-}
 
 .left {
   float: left;
@@ -90,21 +87,9 @@ body {
   margin-right: 15px;
 }
 
-.fc-today .fc-day-number {
-  background: #d9534f;
-  color: white;
-  font-weight: bold;
-  width: 20px;
-  border-radius: 50%;
-  text-align: center;
-  margin: 2px;
-}
 
-.fc-today {
-  background-color: #f2f2f2;
-}
 
-/*end of full calendar styles*/
+end of full calendar styles*/
 @media (min-width: 1500px) {
   .container {
     max-width: 1430px;
@@ -323,4 +308,19 @@ body {
 }
 .text-danger {
   font-size: 0.9em;
+}
+/*calendar styles*/
+.fc-left .fc-button-group {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.fc-day-grid-event .fc-content {
+  color: #fff;
+}
+.fc-body td {
+  cursor: pointer;
+}
+
+.fc-today {
+  background-color: #f2f2f2;
 }
