@@ -16,7 +16,7 @@
           <a routerLink="#0" class="main-nav__link">المواعيد</a>
         </li>
         <li class="main-nav__item" *ngIf="authService.roleMatch(['SuperAdmin']) || authService.roleMatch(['Admin']) ">
-          <a routerLink="/test" class="main-nav__link">test</a>
+          <a routerLink="/adminRegister" class="main-nav__link">UpdateUser</a>
         </li>
       </ul>
     </nav>
@@ -36,7 +36,7 @@
       <!-- <span class="drop-down__current">{{userClaims.UserName}}</span> -->
       <ul class="drop-down__menu">
         <li class="drop-down__item">
-          <a routerLink="#0" class="drop-down__link">profile</a>
+          <a routerLink="/profile" class="drop-down__link">profile</a>
         </li>
         <li class="drop-down__item">
           <!-- <a class="drop-down__link" (click)="Logout">logout</a> -->

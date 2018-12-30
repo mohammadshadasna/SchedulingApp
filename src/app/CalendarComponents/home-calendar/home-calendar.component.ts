@@ -13,6 +13,7 @@ import { UserService } from '../../services/user.service';
 })
 export class HomeCalendarComponent implements OnInit {
   //clickedDate: string[];
+  timezone :"UTC";
   calendarOptions: Options;
   displayEvent: any;
   events = null;
@@ -32,9 +33,9 @@ export class HomeCalendarComponent implements OnInit {
   //     this.userClaims = data;
   //     console.log(this.userClaims);
   // });
-    //this.eventService.getAllAppointments().subscribe((data:any) => {
+    this.eventService.getAllAppointments().subscribe((data:any) => {
 
-    this.eventService.getEvents().subscribe(data => {
+    //this.eventService.getEvents().subscribe(data => {
       //console.log(data);
     this.calendarOptions = {
       editable: true,

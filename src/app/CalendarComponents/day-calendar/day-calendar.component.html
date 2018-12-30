@@ -1,3 +1,4 @@
+<bs-navbar></bs-navbar>
 <div>
   <div *ngIf="dayCalendarOptions">
     <ng-fullcalendar
@@ -12,7 +13,7 @@
   </div>
 </div>
 
-<div *ngIf="clickedDate">
+<div *ngIf="clickedDate && !appointmentCreateEventSuccessful">
   <div
     class="modal fade show d-block"
     id="exampleModal"
@@ -29,9 +30,8 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="newEvent">New Apppointment</h4>
-          <!--
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          -->
+          
+            
           <button
             type="button"
             class="close"
@@ -45,7 +45,7 @@
 
         <form #modalForm="ngForm" (ngSubmit)="OnSubmit(title.value)">
           <div class="modal-body">
-            <!-- <form> -->
+            
             <div class="form-group">
               <label for="title"><b>Title</b></label>
               <input
@@ -64,10 +64,10 @@
                 Title is required.
               </div>
             </div>
-            <!-- </form> -->
+            
           </div>
           <div class="modal-footer">
-            <!-- <div> -->
+            
             <button
               type="button"
               class="btn btn-secondary"
@@ -83,33 +83,16 @@
             >
               Create Event
             </button>
-            <!-- </div> -->
-            <!--
-              <div *ngIf="clickedDate">
-                  <button type="button" class="btn btn-danger left" id="delete">Delete Event</button>
-                  <button type="button" class="btn btn-secondary" (click)="clickedDate = !clickedDate" data-dismiss="modal">Cancel</button>
-                  <button
-                   class="btn btn-success"
-                    type="submit"
-                    [disabled] = "!modalForm.valid"
-                    >Update Event</button>
-              </div>
-            -->
-            <!--
-              <button type="button" class="btn btn-secondary" (click)="clickedDate = !clickedDate" data-dismiss="modal">Cancel</button>
-              <button
-               class="btn btn-success"
-                type="submit"
-                [disabled] = "!modalForm.valid"
-                >Create Event</button>
-            -->
           </div>
         </form>
       </div>
     </div>
   </div>
-</div>
+</div> 
 
+
+
+<!--down hidden-->
 <!--
   <div *ngIf="clickedDate">
 
@@ -119,7 +102,7 @@
         <div class="modal-content">
           <div class="modal-header">
               <h4 class="modal-title" id="newEvent">New Apppointment</h4>
-            <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+             <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
             <button type="button" class="close" (click)="clickedDate = !clickedDate" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -128,7 +111,7 @@
           #modalForm="ngForm"
            (ngSubmit)="getData(f.value)">
           <div class="modal-body">
-            <!--<form>
+            <form>
                   <div class="form-group">
                       <label for="title" ><b>Title</b></label>
                       <input
@@ -148,7 +131,7 @@
                        Title is required.
                       </div>
                   </div>
-              <!--</form>
+              </form>
           </div>
           <div class="modal-footer">
               <button type="button" class="btn btn-secondary" (click)="clickedDate = !clickedDate" data-dismiss="modal">Cancel</button>

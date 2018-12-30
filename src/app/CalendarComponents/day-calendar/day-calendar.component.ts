@@ -5,7 +5,7 @@ import { CalendarComponent } from 'ng-fullcalendar';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { NewEvent } from '../../models/newEvent';
-import { NewEventService } from '../../services/new-event.service';
+//import { NewEventService } from '../../services/new-event.service';
 
 
 @Component({
@@ -19,24 +19,55 @@ export class DayCalendarComponent implements OnInit {
   end: string;
   newEvent:NewEvent;
   clickedDate: string[];
- 
+  appointmentCreateEventSuccessful : boolean = false;
   getDateClicked: string;//property holding parameters coming from home calendar
   dayCalendarOptions: Options;
   @ViewChild(CalendarComponent) ucCalendarDay : CalendarComponent
 
   constructor(
     private eventService: EventService,
-    private newEventService: NewEventService,
+    //private newEventService: NewEventService,
     private activatedRoute: ActivatedRoute,
     private router : Router
     
-  ) {
+  ) { }
 
+  ngOnInit() {
 
+    //getting route parameter
+    this.activatedRoute.paramMap.subscribe(params => {
+      //console.log(params);
+      this.getDateClicked = params.get('date');
+      //console.log(this.getDateClicked);
+    });
+    
+    this.eventService.getAllAppointments().subscribe((data:any) =>{
+      console.log(data);
+      this.dayCalendarOptions = {
+        defaultDate: this.getDateClicked,
+        defaultView: 'agendaDay',
+        slotEventOverlap: false,
+        allDaySlot: false,
+        header: {
+          left: 'title',
+          center: '',
+          right: 'prev,next today'
+        },
+        selectable: true,
+        selectHelper: true,
+        slotDuration: moment.duration('00:15:00'),
+        minTime: moment.duration('08:00:00'),
+        maxTime: moment.duration('14:10:00'),
+        
+        events: data
+        //selectable: true,
+        // selectHelper: true
+      }
+    });
   }
 
   OnSubmit(title: string){
-    
+    //console.log(title);
     this.start = this.clickedDate.toString();
     
     this.end = this.clickedDate.toString();
@@ -44,10 +75,12 @@ export class DayCalendarComponent implements OnInit {
     this.eventService.insertAppointment(title,this.start,this.end).subscribe(
     
       (data : any) =>{
-        localStorage.clear();
+        //localStorage.clear();
+        //yaha per ek property true karo jisse modal ko hide kar saken
+        this.appointmentCreateEventSuccessful = true;
         localStorage.setItem('appointment',JSON.stringify(data));
         //console.log(localStorage.getItem('appointment'));
-        //this.router.navigate(['/homeCalendar']);
+        this.router.navigate(['/homeCalendar']);
         this.eventService.getAllAppointments().subscribe(
           (data:any)=>{
             this.eventService.allAppointments = data;
@@ -69,41 +102,7 @@ export class DayCalendarComponent implements OnInit {
     //console.log(title);
   }
 
-  ngOnInit() {
-
-    //getting route parameter
-    this.activatedRoute.paramMap.subscribe(params => {
-      //console.log(params);
-      this.getDateClicked = params.get('date');
-    });
-    //getting query parameters
-    // this.activatedRoute.queryParamMap.subscribe(query =>{
-    //   //console.log(query);
-    //   this.start = query.get('start');
-    //   console.log(this.start);
-    
-    // });
-    // this.eventService.getAllAppointments().subscribe((data:any) => {
-    this.eventService.getEvents().subscribe(data => {
-      this.dayCalendarOptions = {
-        defaultDate: this.getDateClicked,
-        defaultView: 'agendaDay',
-        slotEventOverlap: false,
-        allDaySlot: false,
-        slotDuration: moment.duration('00:15:00'),
-        minTime: moment.duration('08:00:00'),
-        maxTime: moment.duration('14:10:00'),
-        header: {
-          left: 'title',
-          center: '',
-          right: 'prev,next today'
-        },
-        events: data,
-        selectable: true,
-        selectHelper: true
-      }
-    });
-  }
+ 
 
   dayClick(model :any) {
     this.clickedDate = new Date(model.date).toLocaleString('en-US').split(', ');
@@ -112,10 +111,7 @@ export class DayCalendarComponent implements OnInit {
       //console.log(this.clickedDate[0],"enterdayclick");
       if(this.title)
       {
-      console.log(this.title);
-      
-      
-      
+      //console.log(this.title);
       }
       console.log("no title entered");
   }

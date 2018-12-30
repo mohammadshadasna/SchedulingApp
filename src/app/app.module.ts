@@ -28,6 +28,8 @@ import { ForbiddenComponent } from './AuthenticationComponent/forbidden/forbidde
 import { MonthlyReportsComponent } from './Reports/monthly-reports/monthly-reports.component';
 import { IndexComponent } from './CalendarComponents/index/index.component';
 import { DepartmentService } from './services/department.service';
+import { RegisterAdminComponent } from './SuperAdmin/register-admin/register-admin.component';
+import { ProfileComponent } from './user/profile/profile.component';
 //import { RegisterComponent } from './AuthenticationComponent/register/register.component';
 
 @NgModule({
@@ -43,7 +45,9 @@ import { DepartmentService } from './services/department.service';
     TestComponent,
     ForbiddenComponent,
     MonthlyReportsComponent,
-    IndexComponent
+    IndexComponent,
+    RegisterAdminComponent,
+    ProfileComponent
     //RegisterComponent
     
     
