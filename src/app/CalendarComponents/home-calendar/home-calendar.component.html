@@ -1,21 +1,22 @@
-<div> 
-   <bs-navbar></bs-navbar>
-<!-- <p>Display event : {{displayEvent | json}}</p> -->
-<div *ngIf="calendarOptions">
-  <ng-fullcalendar
-    #ucCalendar
-    [options]="calendarOptions"
-    (dayClick)="dayClick($event.detail.date._d)"
-    (eventClick)="eventClick($event.detail)"
-    [(eventsModel)]="events"
-  >
-  </ng-fullcalendar>
-</div>
-<!-- [queryParams]={start:} -->
-<!---->
-<!-- (dayClick)="dayClick($event.detail.date._d)" -->
+<div>
+  <bs-navbar></bs-navbar>
+  <!-- <p>Display event : {{displayEvent | json}}</p> -->
+  <div class="container">
+    <div *ngIf="calendarOptions">
+      <ng-fullcalendar
+        #ucCalendar
+        [options]="calendarOptions"
+        (dayClick)="dayClick($event.detail.date._d)"
+        (eventClick)="eventClick($event.detail)"
+        [(eventsModel)]="events"
+      >
+      </ng-fullcalendar>
+    </div>
+    <!-- [queryParams]={start:} -->
+    <!---->
+    <!-- (dayClick)="dayClick($event.detail.date._d)" -->
 
-<!--
+    <!--
   <div *ngIf="calendarOptions">
       <ng-fullcalendar
        #ucCalendar
@@ -29,4 +30,5 @@
           </ng-fullcalendar>
   </div>
 -->
+  </div>
 </div>

@@ -2,34 +2,24 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~fullcalendar/dist/fullcalendar.css";
 /* arabic */
+/* arabic */
 @font-face {
-  font-family: "Changa";
+  font-family: "Tajawal";
   font-style: normal;
   font-weight: 400;
-  src: local("Changa"), local("Changa-Regular"),
-    url(https://fonts.gstatic.com/s/changa/v5/2-cm9JNi2YuVOUckY5y-au8.woff2)
+  src: local("Tajawal"), local("Tajawal-Regular"),
+    url(https://fonts.gstatic.com/s/tajawal/v1/Iura6YBj_oCad4k1nzSBC45I.woff2)
       format("woff2");
   unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41,
     U+FB50-FDFF, U+FE80-FEFC;
 }
-/* latin-ext */
-@font-face {
-  font-family: "Changa";
-  font-style: normal;
-  font-weight: 400;
-  src: local("Changa"), local("Changa-Regular"),
-    url(https://fonts.gstatic.com/s/changa/v5/2-cm9JNi2YuVOUckaJy-au8.woff2)
-      format("woff2");
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
-    U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
 /* latin */
 @font-face {
-  font-family: "Changa";
+  font-family: "Tajawal";
   font-style: normal;
   font-weight: 400;
-  src: local("Changa"), local("Changa-Regular"),
-    url(https://fonts.gstatic.com/s/changa/v5/2-cm9JNi2YuVOUckZpy-.woff2)
+  src: local("Tajawal"), local("Tajawal-Regular"),
+    url(https://fonts.gstatic.com/s/tajawal/v1/Iura6YBj_oCad4k1nzGBCw.woff2)
       format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
     U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
@@ -37,39 +27,27 @@
 }
 /* arabic */
 @font-face {
-  font-family: "Changa";
+  font-family: "Tajawal";
   font-style: normal;
   font-weight: 500;
-  src: local("Changa Medium"), local("Changa-Medium"),
-    url(https://fonts.gstatic.com/s/changa/v5/2-cl9JNi2YuVOUcslb-rUM74nZg.woff2)
+  src: local("Tajawal Medium"), local("Tajawal-Medium"),
+    url(https://fonts.gstatic.com/s/tajawal/v1/Iurf6YBj_oCad4k1l8KiHrRpiYlJ.woff2)
       format("woff2");
   unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41,
     U+FB50-FDFF, U+FE80-FEFC;
 }
-/* latin-ext */
-@font-face {
-  font-family: "Changa";
-  font-style: normal;
-  font-weight: 500;
-  src: local("Changa Medium"), local("Changa-Medium"),
-    url(https://fonts.gstatic.com/s/changa/v5/2-cl9JNi2YuVOUcslb-rW874nZg.woff2)
-      format("woff2");
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
-    U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
 /* latin */
 @font-face {
-  font-family: "Changa";
+  font-family: "Tajawal";
   font-style: normal;
   font-weight: 500;
-  src: local("Changa Medium"), local("Changa-Medium"),
-    url(https://fonts.gstatic.com/s/changa/v5/2-cl9JNi2YuVOUcslb-rVc74.woff2)
+  src: local("Tajawal Medium"), local("Tajawal-Medium"),
+    url(https://fonts.gstatic.com/s/tajawal/v1/Iurf6YBj_oCad4k1l8KiHrFpiQ.woff2)
       format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
     U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
     U+FEFF, U+FFFD;
 }
-/*styles for full calendar */
 html {
   direction: rtl;
   font-size: 16px;
@@ -78,9 +56,10 @@ body {
   text-align: right;
   background-color: #f9f9fc;
   color: #646c9a;
-  font-family: "Changa";
+  font-family: "Tajawal";
 }
 
+/*styles for full calendar 
 #calendar1 {
   padding-bottom: 15px;
   z-index: 950;
@@ -95,9 +74,6 @@ body {
   border-radius: 0;
 }
 
-.fc-body td {
-  cursor: pointer;
-}
 
 .left {
   float: left;
@@ -111,25 +87,18 @@ body {
   margin-right: 15px;
 }
 
-.fc-today .fc-day-number {
-  background: #d9534f;
-  color: white;
-  font-weight: bold;
-  width: 20px;
-  border-radius: 50%;
-  text-align: center;
-  margin: 2px;
-}
 
-.fc-today {
-  background-color: #f2f2f2;
-}
 
-/*end of full calendar styles*/
+end of full calendar styles*/
 @media (min-width: 1500px) {
   .container {
     max-width: 1430px;
   }
+}
+
+/**********/
+:root {
+  --color-primary: #562588;
 }
 .main-header {
   display: flex;
@@ -241,15 +210,147 @@ body {
   background: rgba(0, 0, 0, 0.03);
   color: #562588;
 }
-.modal-header .close{
+.modal-header .close {
   margin-right: auto;
   margin-left: 0;
 }
 .modal-footer > :not(:first-child) {
-  margin-right: .25rem;
+  margin-right: 0.25rem;
   margin-left: 0;
 }
-.fc-content .fc-time{
-  color: bisque;
-  
-} 
+
+.login-page {
+  height: 100vh;
+  background: #fff;
+}
+
+.login-page__banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 0 0 0;
+  height: 100vh;
+  overflow: hidden;
+  background: url("./assets/images/login-banner.jpg") no-repeat 0 0;
+}
+.login-page__banner--register {
+  background-image: url("./assets/images/register-banner.jpg");
+}
+.login-page__form {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  flex-direction: column;
+  padding: 100px;
+}
+.login__header {
+  margin-bottom: 30px;
+}
+.login__title {
+  font-size: 40px;
+}
+.login__sub-title {
+  color: #6f6f6f;
+  font-size: 16px;
+}
+
+.form-control {
+  border-radius: 0;
+}
+.btn {
+  border-radius: 0;
+}
+.btn-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.btn-primary:hover,
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+  background-color: #351853;
+  border-color: #351853;
+}
+.btn-primary.disabled,
+.btn-primary:disabled {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.form-control:focus {
+  border-color: rgba(86, 37, 136, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(86, 37, 136, 0.25);
+}
+.btn-link {
+  color: var(--color-primary);
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+  box-shadow: 0 0 0 0.2rem rgba(86, 37, 136, 0.25);
+}
+
+.form-check {
+  padding-right: 1.25rem;
+  padding-left: 0;
+}
+.form-check-input {
+  margin-right: -1.25rem;
+  padding-left: 0;
+}
+.form-link {
+  color: var(--color-primary);
+}
+.form-hint {
+  margin-top: 20px;
+}
+.text-underline {
+  text-decoration: underline;
+}
+.text-danger {
+  font-size: 0.9em;
+}
+/*calendar styles*/
+.fc-left .fc-button-group {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.fc-day-grid-event .fc-content {
+  color: #fff;
+}
+.fc-body td {
+  cursor: pointer;
+}
+
+.fc-today {
+  background-color: #f2f2f2;
+}
+.txt-error {
+  border-color: red;
+}
+.btn-loading {
+  padding-right: 50px;
+  background: url("data:image/svg+xml;base64,PHN2ZyBjbGFzcz0ibGRzLXNwaW5uZXIiIHdpZHRoPSIyMDBwe…VwZWF0Q291bnQ9ImluZGVmaW5pdGUiPjwvYW5pbWF0ZT4KICA8L3JlY3Q+CjwvZz48L3N2Zz4=")
+    no-repeat 100% #fff;
+  background-size: 2.5em;
+}
+
+.general-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.general-loading svg {
+  width: 120px;
+}
+.general-loading svg circle {
+  fill: var(--color-primary);
+}
