@@ -324,3 +324,33 @@ end of full calendar styles*/
 .fc-today {
   background-color: #f2f2f2;
 }
+.txt-error {
+  border-color: red;
+}
+.btn-loading {
+  padding-right: 50px;
+  background: url("data:image/svg+xml;base64,PHN2ZyBjbGFzcz0ibGRzLXNwaW5uZXIiIHdpZHRoPSIyMDBwe…VwZWF0Q291bnQ9ImluZGVmaW5pdGUiPjwvYW5pbWF0ZT4KICA8L3JlY3Q+CjwvZz48L3N2Zz4=")
+    no-repeat 100% #fff;
+  background-size: 2.5em;
+}
+
+.general-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.general-loading svg {
+  width: 120px;
+}
+.general-loading svg circle {
+  fill: var(--color-primary);
+}

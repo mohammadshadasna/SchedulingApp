@@ -12,7 +12,7 @@ import { IndexComponent } from "./CalendarComponents/index/index.component";
 //import { RegisterComponent } from './AuthenticationComponent/register/register.component';
 
 const appRoutes: Routes = [
-  // { path: "", component: SignInComponent },
+  { path: "", component: SignInComponent },
   //{path:'register', component:RegisterComponent},
   { path: "signUp", component: SignUpComponent },
   { path: "index", component: IndexComponent },

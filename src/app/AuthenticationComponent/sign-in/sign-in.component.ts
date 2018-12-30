@@ -13,6 +13,7 @@ export class SignInComponent implements OnInit {
   loginUser: LoginUser;
   userClaims: any;
   isLoginError: boolean = false;
+  isLoading: boolean = false;
 
   constructor(
     // private userService : UserService,
@@ -39,8 +40,10 @@ export class SignInComponent implements OnInit {
 
   OnSubmit(username: string, password: string) {
     // this.userService.userAuthentication(username,password).subscribe((data : any)=>{
+    this.isLoading = true;
     this.authService.login(username, password).subscribe(
       (data: any) => {
+        this.isLoading = false;
         localStorage.setItem("userToken", data.access_token);
         localStorage.setItem("userRoles", data.role);
         this.router.navigate(["/homeCalendar"]);
@@ -56,6 +59,7 @@ export class SignInComponent implements OnInit {
         // }
       },
       (err: HttpErrorResponse) => {
+        this.isLoading = false;
         this.isLoginError = true;
       }
     );
