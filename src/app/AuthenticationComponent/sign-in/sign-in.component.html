@@ -34,60 +34,98 @@
   </div>
 </div> -->
 
-<div *ngIf="isLoginError" class="alert alert-danger alert-dismissible fade show" role="alert">
-  <strong>Sorry!</strong> UserName or Password is wrong...
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="isLoginError = !isLoginError">
-    <span aria-hidden="true">&times;</span>
-  </button>
-  <h1>Want To Change Password..</h1>
-</div>
-
-
-<div class="row">
-  <div class="col s6 offset-s3">
-    <div class="card">
-      <div class="card-header">
-        <div><h1>User Login</h1></div>
+<section class="login-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-5 login-page__banner">
+        <img src="../../../assets//images/logo.png" alt="" />
+      </div>
+      <div class="col-sm-7 login-page__form">
+        <div
+          *ngIf="isLoginError"
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>عفوا !</strong> إسم المستخدم أز كلمة المرور غير صحيحة
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"
+            (click)="isLoginError = !isLoginError"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
         <div>
-          <img src="" >
+          <div class="login__header">
+            <h2 class="login__title">تسجيل الدخول</h2>
+            <h4 class="login__sub-title">مرحبا بك! يرجي تسجيل الدخول</h4>
+          </div>
+          <form
+            #loginForm="ngForm"
+            (ngSubmit)="OnSubmit(userName.value, password.value)"
+          >
+            <div>
+              <div class="form-group">
+                <label for="userName">إسم المستخدم</label>
+                <input
+                  type="text"
+                  id="userName"
+                  name="userName"
+                  #userName="ngModel"
+                  [(ngModel)]="loginUser.userName"
+                  placeholder="إسم المستخدم"
+                  class="form-control"
+                  required
+                />
+                <div
+                  class="text-danger"
+                  *ngIf="userName.touched && userName.invalid"
+                >
+                  إسم المستخدم مطلوب
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="password">كلمة المرور</label>
+                <input
+                  type="password"
+                  name="password"
+                  #password="ngModel"
+                  [(ngModel)]="loginUser.Password"
+                  class="form-control"
+                  placeholder="كلمة المرور"
+                  required
+                />
+                <div
+                  class="text-danger"
+                  *ngIf="password.touched && password.invalid"
+                >
+                  كلمة المرور مطلوبة
+                </div>
+              </div>
+              <div class="form-group">
+                <button
+                  style="width:150px"
+                  class="btn btn-primary"
+                  [disabled]="!loginForm.valid"
+                  type="submit"
+                >
+                  تسجيل الدخول
+                </button>
+                <img
+                  *ngIf="loading"
+                  src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                />
+                <a [routerLink]="['/signUp']" class="btn btn-link"
+                  >تسجيل مستخدم جديد</a
+                >
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-      <form #loginForm="ngForm" (ngSubmit)="OnSubmit(userName.value,password.value)">
-        <div class="card-body">
-          <div>
-            <div class="col-sm-6">
-              <img src="/assets/images/logo_quiz.jpg" style="width:200px;height:100px" class="offset-s3">
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group col">
-                <label for="userName">UserName</label>
-                <input type="text" id="userName" name="userName" #userName="ngModel" [(ngModel)]="loginUser.userName" placeholder="enter username"
-                  class="form-control" required />
-                <div class="alert alert-danger" *ngIf="userName.touched && userName.invalid">
-                  ..User Name is required
-                </div>
-              </div>
-          
-              <div class="form-group col">
-                <label for="password">Password</label>
-                <input type="password" name="password" #password="ngModel" [(ngModel)]="loginUser.Password" class="form-control"
-                  placeholder="enter password" required />
-                <div class="alert alert-danger" *ngIf="password.touched && password.invalid">
-                  ..Password is required
-                </div>
-              </div>
-            </div>
-          
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="form-group">
-            <button style="width:150px" class="btn btn-primary" [disabled]="!loginForm.valid" type="submit">Login</button>
-            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-            <a [routerLink]="['/signUp']" class="btn btn-link">Register</a> 
-          </div>
-        </div>
-      </form>
     </div>
   </div>
-</div>
+</section>
