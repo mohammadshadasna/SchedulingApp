@@ -1,134 +1,183 @@
- <div class="row">
-  <div class="col s8 offset-s2">
-    <div class="card">
-      <div class="card-header">
-
-        <h1>User Registration</h1>
-
-      </div> 
-      <form #userRegistrationForm="ngForm" (ngSubmit)="OnSubmit(userRegistrationForm)">
-      <div class="card-body">
-            <div class="row">
-              <div class="form-group col-sm-6">
-                <label>username:</label>
-                <input type="text"
-                 id="UserName"
-                  name="UserName"
-                   #UserName="ngModel"
-                    [(ngModel)]="user.UserName"
-                     class="form-control"
-                  placeholder="Enter User Name"
-                   required>
-                <div class="alert alert-danger" *ngIf="UserName.touched && UserName.invalid">
-                  Title is required.
-                </div>
-              </div>
-              <div class="form-group col-sm-6"
-              >  
-                  <label>Email:</label>
-                  <input type="email"
-                  id="Email"
-                   name="Email"
-                   #Email="ngModel"                   
-                   [(ngModel)]="user.Email"
-                   class="form-control"                   
-                   placeholder="Enter email"
-                    required email
-                    >
-                   <div class="alert alert-danger"
-                   *ngIf="Email.errors?.required && Email.touched"
-                   >
-                   
-                   Email is required..
-                   </div>
-                   <div class="alert alert-danger"
-                   *ngIf=" Email.errors?.email && Email.touched"
-                   >
-                   
-                   Email is invalid..
-                   </div>
-              </div>
-            
-              
-            </div>
-            <div class="row" >
-                
-                <div class="form-group col-sm-6">
-                    <label>Password:</label>
-                    <input 
-                    id="Password"
-                     type="password"
-                     name="Password"
-                      class="form-control"
-                       #Password="ngModel"
-                      [(ngModel)]="user.Password"
-                      placeholder="Enter password" 
-                        required
-                        >
-                    <div class="alert alert-danger" *ngIf="Password.touched && Password.invalid && Password.errors?.required">
-                      This Password is required..
-                    </div>
-                    <div class="alert alert-danger" 
-                  *ngIf="Password.touched  && Password.errors?.notEqual && !Password.errors?.required">
-                    Password and Confirm Password does not match..
-                  </div>
-                  </div>
-              <div class="form-group col-sm-6" 
-              >
-              
-                <label>Confirm Password:</label>
-                <input type="text"
-                id="ConfirmPassword"
-                 name="ConfirmPassword"
-                  #ConfirmPassword="ngModel"
-                   [(ngModel)]="user.ConfirmPassword"
-                    class="form-control"
-                  placeholder="Re-enter password"
-                   passConfirmEqualValidator="Password"
-                    required>
-                  <div class="alert alert-danger" *ngIf="ConfirmPassword.touched && ConfirmPassword.errors?.required">
-                    Confirm Password is required..
-                  </div>                 
-                  <div class="alert alert-danger" 
-                  *ngIf="ConfirmPassword.touched  && ConfirmPassword.errors?.notEqual && !ConfirmPassword.errors?.required">
-                    Password and Confirm Password does not match..
-                  </div>
-                
-              </div>
-              
-              
-            </div>
-            <div class="row">
-          <div class="form-group col-sm-6">
-            <label>FirstName:</label>
-            <input type="text" name="FirstName" #FirstName="ngModel"
-             [(ngModel)]="user.FirstName" class="form-control"
-              placeholder="Enter FirstName" required>
-              <div class="alert alert-danger" *ngIf="FirstName.touched && FirstName.invalid">Field is required..</div>
-          </div>
-          <div class="form-group col-sm-6">
-            <label>LastName:</label>
-            <input type="text" name="LastName" #LastName="ngModel"
-             [(ngModel)]="user.LastName" class="form-control"
-              placeholder="Enter LastName" required>
-              <div class="alert alert-danger" *ngIf="LastName.touched && LastName.invalid">Field is Required..</div>
-          </div>
+<section class="login-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-5 login-page__banner">
+        <img src="../../../assets//images/logo.png" alt="" />
+      </div>
+      <div class="col-sm-7 login-page__form">
+        <div class="login__header">
+          <h2 class="login__title">مستخدم جديد</h2>
+          <h4 class="login__sub-title">لإنشاء حساب جديد ...</h4>
         </div>
-          
+        <form
+          #userRegistrationForm="ngForm"
+          (ngSubmit)="OnSubmit(userRegistrationForm)"
+        >
+          <div class="row">
+            <div class="form-group col-sm-6">
+              <label>الإسم الأول:</label>
+              <input
+                type="text"
+                name="FirstName"
+                #FirstName="ngModel"
+                [(ngModel)]="user.FirstName"
+                class="form-control"
+                placeholder="الإسم الأول"
+                required
+              />
+              <div
+                class="text-danger"
+                *ngIf="FirstName.touched && FirstName.invalid"
+              >
+                حقل مطلوب
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <label>الإسم الأخير:</label>
+              <input
+                type="text"
+                name="LastName"
+                #LastName="ngModel"
+                [(ngModel)]="user.LastName"
+                class="form-control"
+                placeholder="الإسم الأخير"
+                required
+              />
+              <div
+                class="text-danger"
+                *ngIf="LastName.touched && LastName.invalid"
+              >
+                حقل مطلوب
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-sm-6">
+              <label>إسم المستخدم:</label>
+              <input
+                type="text"
+                id="UserName"
+                name="UserName"
+                #UserName="ngModel"
+                [(ngModel)]="user.UserName"
+                class="form-control"
+                placeholder="إسم المستخدم"
+                required
+              />
+              <div
+                class="text-danger"
+                *ngIf="UserName.touched && UserName.invalid"
+              >
+                حقل مطلوب
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <label>البريد اٌلكترونى:</label>
+              <input
+                type="email"
+                id="Email"
+                name="Email"
+                #Email="ngModel"
+                [(ngModel)]="user.Email"
+                class="form-control"
+                placeholder="البريد اٌلكترونى"
+                required
+                email
+              />
+              <div
+                class="text-danger"
+                *ngIf="Email.errors?.required && Email.touched"
+              >
+                حقل مطلوب
+              </div>
+              <div
+                class="text-danger"
+                *ngIf="Email.errors?.email && Email.touched"
+              >
+                البريد الإكتروني غير صحيح
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-sm-6">
+              <label>كلمة المرور:</label>
+              <input
+                id="Password"
+                type="password"
+                name="Password"
+                class="form-control"
+                #Password="ngModel"
+                [(ngModel)]="user.Password"
+                placeholder="كلمة المرور"
+                required
+              />
+              <div
+                class="text-danger"
+                *ngIf="
+                  Password.touched &&
+                  Password.invalid &&
+                  Password.errors?.required
+                "
+              >
+                حقل مطلوب
+              </div>
+              <div
+                class="text-danger"
+                *ngIf="
+                  Password.touched &&
+                  Password.errors?.notEqual &&
+                  !Password.errors?.required
+                "
+              >
+                كلمة المرور وتأكيد كلمة المرور غير متطابقتين
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <label>تأكيد كلمة المرور:</label>
+              <input
+                type="text"
+                id="ConfirmPassword"
+                name="ConfirmPassword"
+                #ConfirmPassword="ngModel"
+                [(ngModel)]="user.ConfirmPassword"
+                class="form-control"
+                placeholder="تأكيد كلمة المرور"
+                passConfirmEqualValidator="Password"
+                required
+              />
+              <div
+                class="text-danger"
+                *ngIf="
+                  ConfirmPassword.touched && ConfirmPassword.errors?.required
+                "
+              >
+                حقل مطلوب
+              </div>
+              <div
+                class="text-danger"
+                *ngIf="
+                  ConfirmPassword.touched &&
+                  ConfirmPassword.errors?.notEqual &&
+                  !ConfirmPassword.errors?.required
+                "
+              >
+                كلمة المرور وتأكيد كلمة المرور غير متطابقتين
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary btn-block"
+            [disabled]="!userRegistrationForm.valid"
+          >
+            مستخدم جديد
+          </button>
+        </form>
       </div>
-      <div class="card-footer">
-        
-        <button type="submit" style="width:100%" class="btn btn-success" [disabled] = "!userRegistrationForm.valid">Submit</button>
-      </div>
-    </form>
     </div>
   </div>
-</div>
-
-
-
-
-
+</section>
 
 <!-- <div class="row">
   <div class="col s8 offset-s2">
@@ -147,7 +196,7 @@
                 formControlName="username"
                 class="form-control"
                 [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
-                <div class="alert alert-danger" *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                <div class="text-danger>
                     <div *ngIf="f.username.errors.required">Username is required</div>
                 </div>
               </div>
@@ -164,13 +213,13 @@
                    placeholder="Enter email"
                     required email
                     >
-                   <div class="alert alert-danger"
+                   <div class="text-danger"
                    *ngIf="Email.errors?.required && Email.touched"
                    >
                    
                    Email is required..
                    </div>
-                   <div class="alert alert-danger"
+                   <div class="text-danger"
                    *ngIf=" Email.errors?.email && Email.touched"
                    >
                    
@@ -194,10 +243,10 @@
                       placeholder="Enter password" 
                         required
                         >
-                    <div class="alert alert-danger" *ngIf="Password.touched && Password.invalid && Password.errors?.required">
+                    <div class="text-danger>
                       This Password is required..
                     </div>
-                    <div class="alert alert-danger" 
+                    <div class="text-danger 
                   *ngIf="Password.touched  && Password.errors?.notEqual && !Password.errors?.required">
                     Password and Confirm Password does not match..
                   </div>
@@ -215,10 +264,10 @@
                   placeholder="Re-enter password"
                    passConfirmEqualValidator="Password"
                     required>
-                  <div class="alert alert-danger" *ngIf="ConfirmPassword.touched && ConfirmPassword.errors?.required">
+                  <div class="text-danger>
                     Confirm Password is required..
                   </div>                 
-                  <div class="alert alert-danger" 
+                  <div class="text-danger 
                   *ngIf="ConfirmPassword.touched  && ConfirmPassword.errors?.notEqual && !ConfirmPassword.errors?.required">
                     Password and Confirm Password does not match..
                   </div>
@@ -233,14 +282,14 @@
             <input type="text" name="FirstName" #FirstName="ngModel"
              [(ngModel)]="user.FirstName" class="form-control"
               placeholder="Enter FirstName" required>
-              <div class="alert alert-danger" *ngIf="FirstName.touched && FirstName.invalid">Field is required..</div>
+              <div class="text-danger>
           </div>
           <div class="form-group col-sm-6">
             <label>LastName:</label>
             <input type="text" name="LastName" #LastName="ngModel"
              [(ngModel)]="user.LastName" class="form-control"
               placeholder="Enter LastName" required>
-              <div class="alert alert-danger" *ngIf="LastName.touched && LastName.invalid">Field is Required..</div>
+              <div class="text-danger>
           </div>
         </div>
           

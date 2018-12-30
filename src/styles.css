@@ -110,6 +110,11 @@ body {
     max-width: 1430px;
   }
 }
+
+/**********/
+:root {
+  --color-primary: #562588;
+}
 .main-header {
   display: flex;
   justify-content: space-between;
@@ -268,8 +273,8 @@ body {
   border-radius: 0;
 }
 .btn-primary {
-  background-color: #562588;
-  border-color: #562588;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
 }
 .btn-primary:hover,
 .btn-primary:not(:disabled):not(.disabled):active,
@@ -280,18 +285,39 @@ body {
 }
 .btn-primary.disabled,
 .btn-primary:disabled {
-  background-color: #562588;
-  border-color: #562588;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
 }
 .form-control:focus {
   border-color: rgba(86, 37, 136, 0.25);
   box-shadow: 0 0 0 0.2rem rgba(86, 37, 136, 0.25);
 }
 .btn-link {
-  color: #562588;
+  color: var(--color-primary);
 }
 
 .btn-primary:focus,
 .btn-primary.focus {
   box-shadow: 0 0 0 0.2rem rgba(86, 37, 136, 0.25);
+}
+
+.form-check {
+  padding-right: 1.25rem;
+  padding-left: 0;
+}
+.form-check-input {
+  margin-right: -1.25rem;
+  padding-left: 0;
+}
+.form-link {
+  color: var(--color-primary);
+}
+.form-hint {
+  margin-top: 20px;
+}
+.text-underline {
+  text-decoration: underline;
+}
+.text-danger {
+  font-size: 0.9em;
 }
