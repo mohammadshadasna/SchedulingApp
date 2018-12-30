@@ -248,6 +248,9 @@ body {
   overflow: hidden;
   background: url("./assets/images/login-banner.jpg") no-repeat 0 0;
 }
+.login-page__banner--register {
+  background-image: url("./assets/images/register-banner.jpg");
+}
 .login-page__form {
   display: flex;
   height: 100vh;
