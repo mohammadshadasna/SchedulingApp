@@ -11,13 +11,14 @@ import { Observable, of } from 'rxjs';
 export class EventService {
     //-----------------------properties--------------------
     rootUrl = 'http://localhost:1844';
-    allAppointments : any[];
+    allAppointments : Observable<Object>;
+    userId;
     //renderedAppointments : NewEvent[];
     
 
     //---------------------------helper methods---------------
   constructor(
-      private httpClient : HttpClient,
+      private httpClient : HttpClient
       
   ) { }
 
@@ -40,20 +41,24 @@ export class EventService {
         return this.httpClient.post(this.rootUrl + '/api/InsertAppointmentData',body);
   }
 
-  public getAllAppointments(){
-      return this.httpClient.get(this.rootUrl + '/api/getAppointments');
-    //   .subscribe(
-    //       (data : any) => {
-    //         //this.allAppointments = data;
-    //         //this.renderedAppointments = {
-    //         //}
-    //         data = {
-    //             let renderedAppointments: NewEvent = {
+    public getAllAppointments(){
+      //setTimeout(() => {
+        //this.allAppointments = this.httpClient.get(this.rootUrl + '/api/getAppointments');
+      //}, 2000);
+      return this.httpClient.get(this.rootUrl + '/api/getAllAppointments');
+      //return this.allAppointments;
+    }
 
-    //             }
-    //         }
-    //   });
+    public getAllAppointmentsByDepartment(department){
 
+    }
+
+    public getAllAppointmentsByUserId(user){
+      setTimeout(()=>{
+        this.userId = JSON.stringify(localStorage.getItem('userId'));
+        console.log(this.userId);
+      },5);
+      return this.httpClient.get(this.rootUrl + '/api/getAllAppointmentsByUserId');
     }
 
 //   public getEvents(): Observable<any> {

@@ -10,6 +10,8 @@ import { AuthService } from "../../services/auth.service";
   styleUrls: ["./sign-in.component.css"]
 })
 export class SignInComponent implements OnInit {
+  user$;
+  user = {};
   loginUser: LoginUser;
   userClaims: any;
   isLoginError: boolean = false;
@@ -24,29 +26,26 @@ export class SignInComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.authService.getUserClaims().subscribe((data : any)=>{
-    //     this.userClaims = data;
-    // });
   }
 
-  // getUserCredentials(){
-  //     // this.userService.getUserClaims().subscribe((data : any)=>{
-  //         this.authService.getUserClaims().subscribe((data : any)=>{
-  //         this.userClaims = data;
-  //         localStorage.setItem('userCredentials',this.userClaims);
-  //         console.log(this.userClaims);
-  //     });
-  // }
+  
 
   OnSubmit(username: string, password: string) {
+    //var userdata : string;
     // this.userService.userAuthentication(username,password).subscribe((data : any)=>{
     this.isLoading = true;
     this.authService.login(username, password).subscribe(
       (data: any) => {
-        this.isLoading = false;
+        
+        //userdata = JSON.stringify(data);
+        //this.isLoading = false;
         localStorage.setItem("userToken", data.access_token);
         localStorage.setItem("userRoles", data.role);
-        this.router.navigate(["/homeCalendar"]);
+        this.authService.getUserCredentials();
+        //this.authService.getUserDetails();
+          this.isLoading = false;
+          this.router.navigate(["/homeCalendar"]);
+        
         //neeche ka code tab use karenge jab index page design kar liye honge
         // console.log(data.role);
         // if(this.authService.roleMatch(['SuperAdmin']))
@@ -62,6 +61,8 @@ export class SignInComponent implements OnInit {
         this.isLoading = false;
         this.isLoginError = true;
       }
+      
     );
+   // console.log(userdata);
   }
 }

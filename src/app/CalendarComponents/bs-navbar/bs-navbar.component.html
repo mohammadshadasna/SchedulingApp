@@ -32,8 +32,8 @@
      <!-- </ng-template> -->
     <div class="main-header__user-menu drop-down" *ngIf="isLoggedIn">
         <!-- *ngIf="userClaims" -->
-      <span class="drop-down__current">إسم المستخدم</span>
-      <!-- <span class="drop-down__current">{{userClaims.UserName}}</span> -->
+      <!-- <span class="drop-down__current">إسم المستخدم</span> -->
+      <span class="drop-down__current">{{userName}}</span>
       <ul class="drop-down__menu">
         <li class="drop-down__item">
           <a routerLink="/profile" class="drop-down__link">profile</a>

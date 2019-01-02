@@ -23,7 +23,8 @@ export class ProfileComponent implements OnInit {
         //this.product = data;
         this.user = data;
       });
-      //console.log(this.product);
+      console.log(this.user$.UserName + 'user$');
+      //console.log(this.user.UserName + 'user$');
       //getting id of product from firedb
       //  this.productId = this.activatedRoute.snapshot.paramMap.get('id');//we use snapshot bcoz no previous or next button implemented on this component
       //  if(this.productId){

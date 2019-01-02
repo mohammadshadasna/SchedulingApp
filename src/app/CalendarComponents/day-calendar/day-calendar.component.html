@@ -1,4 +1,10 @@
+<!--navbar showing work-->
 <bs-navbar></bs-navbar>
+<!--end of navbar showing work-->
+
+
+<!--start of ngFullCcalendar-->
+
 <div>
   <div *ngIf="dayCalendarOptions">
     <ng-fullcalendar
@@ -12,6 +18,10 @@
     </ng-fullcalendar>
   </div>
 </div>
+<!--end of ng-fullCalendar-->
+
+
+<!--modal for creating appointment-->
 
 <div *ngIf="clickedDate && !appointmentCreateEventSuccessful">
   <div
@@ -89,21 +99,20 @@
     </div>
   </div>
 </div> 
+<!--end of modal for creating appointment-->
 
 
+<!--Modal for appointmentEvent click-->
 
-<!--down hidden-->
-<!--
-  <div *ngIf="clickedDate">
+  <div *ngIf="appointmentEditEventSuccessful">
 
     <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-backdrop fade show"  (click)="clickedDate = !clickedDate"></div>
+        <div class="modal-backdrop fade show"  (click)="appointmentEditEventSuccessful = !appointmentEditEventSuccessful"></div>
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-              <h4 class="modal-title" id="newEvent">New Apppointment</h4>
-             <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" (click)="clickedDate = !clickedDate" data-dismiss="modal" aria-label="Close">
+              <h4 class="modal-title" id="newEvent">Edit Apppointment</h4>
+            <button type="button" class="close" (click)="appointmentEditEventSuccessful = !appointmentEditEventSuccessful" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -121,7 +130,6 @@
                        id="title"
                        type="text"
                        class="form-control"
-                       (onfocusout)="getTitle()"
                        required
                        >
                        <div
@@ -134,8 +142,10 @@
               </form>
           </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" (click)="clickedDate = !clickedDate" data-dismiss="modal">Cancel</button>
-              <button  class="btn btn-success">Create Event</button>
+              <button type="button" class="btn btn-secondary"
+              *ngIf="!appointmentEditEventSuccessful"
+              (click)="appointmentEditEventSuccessful = !appointmentEditEventSuccessful" data-dismiss="modal">Cancel</button>
+              <button  class="btn btn-success">Confirm Event</button>
           </div>
         </form>
         </div>
@@ -143,4 +153,4 @@
     </div>
 
   </div>
--->
+<!--end of modal Event Click in day calendar-->

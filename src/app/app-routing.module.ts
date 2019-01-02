@@ -20,7 +20,8 @@ const appRoutes : Routes = [
   { path: 'signUp', component: SignUpComponent },
   { path: 'index', component:IndexComponent},
   {path: 'forbidden', component: ForbiddenComponent,canActivate: [AuthGuard]},
-  { path: 'adminRegister', component:RegisterAdminComponent,canActivate:[AuthGuard],data: {roles: ['SuperAdmin']} },
+  // { path: 'adminRegister', component:RegisterAdminComponent,canActivate:[AuthGuard],data: {roles: ['SuperAdmin']} },
+  { path: 'adminRegister', component:RegisterAdminComponent,canActivate:[AuthGuard] },
   { path: 'homeCalendar', component: HomeCalendarComponent,canActivate:[AuthGuard] },
   { path: 'dayCalendar/:date', component: DayCalendarComponent,canActivate:[AuthGuard] },
   { path: "**", component: NotFoundComponent }

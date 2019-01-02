@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { Options } from "fullcalendar";
 import { CalendarComponent } from "ng-fullcalendar";
-//import { EventSesrvice } from '../../event.service';
 import { Router } from "@angular/router";
 import { EventService } from "../../services/event.service";
 import { UserService } from "../../services/user.service";
+import { AuthService } from "../../services/auth.service";
+import { Department } from "../../models/department.model";
+import { DepartmentService } from "../../services/department.service";
 
 @Component({
   selector: "home-calendar",
@@ -12,34 +14,48 @@ import { UserService } from "../../services/user.service";
   styleUrls: ["./home-calendar.component.css"]
 })
 export class HomeCalendarComponent implements OnInit {
-  //clickedDate: string[];
+  departmentName = "-1";
+  departments;
+  //departments : Department[];
+  // departments : Department[] = [
+  //   //{id:0,name:'--select department'},
+  //   {id : 1,name: 'IT'},
+  //   {id : 2,name: 'HR'},
+  //   {id : 3,name: 'Rukhas'}
+  // ];
+  userId: string;
+  userDepartmentId: string;
   timezone :"UTC";
   calendarOptions: Options;
   displayEvent: any;
   events = null;
+  userRole: string;
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
-  // userClaims : any;
+  
   constructor(
-    //private eventService: EventSesrvice,
+    private deptService : DepartmentService,
     private eventService: EventService,
     private router: Router,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private authService : AuthService
+  ) {
+    //  this.deptService.getAllDepartments().subscribe((data : any)=>
+    // {
+    //   //console.log("entered getdepartments");
+    //   this.departments = data;
+    // });
+  }
 
   ngOnInit() {
-  //   this.userService.getUserClaims().subscribe((data : any)=>{
-  //     this.userClaims = data;
-  //     console.log(this.userClaims);
-  // });
+    //for SuperAdmin
+    if(this.authService.roleMatch(['SuperAdmin'])){
+      console.log("entered SuperAdminCondition");
+      this.deptService.getAllDepartments().subscribe((data : any)=>
+    {
+      //console.log("entered getdepartments");
+      this.departments = data;
+    });
     this.eventService.getAllAppointments().subscribe((data:any) => {
-    //   this.userService.getUserClaims().subscribe((data : any)=>{
-    //     this.userClaims = data;
-    //     console.log(this.userClaims);
-    // });
-    //this.eventService.getAllAppointments().subscribe((data:any) => {
-
-    //this.eventService.getEvents().subscribe(data => {
-      //console.log(data);
       this.calendarOptions = {
         editable: true,
         isRTL: true,
@@ -73,11 +89,95 @@ export class HomeCalendarComponent implements OnInit {
           center: "title",
           right: "month,agendaWeek"
         },
-        //events: data
         events: data
       };
     });
-    //console.log(this.eventService.allAppointments);
+  }
+
+  //for admin
+  if(this.authService.roleMatch(['Admin'])){
+    console.log("entered AdminCondition");
+    this.eventService.getAllAppointments().subscribe((data:any) => {
+      this.calendarOptions = {
+        editable: true,
+        isRTL: true,
+        locale: "ar-sa",
+        firstDay: 6,
+        eventLimit: false,
+        // buttonIcons: {
+        //   prev: "left-single-arrow",
+        //   next: "right-single-arrow",
+        //   prevYear: "left-double-arrow",
+        //   nextYear: "right-double-arrow"
+        // },
+        dayNamesShort: [
+          "الأحد",
+          "الإثنين",
+          "الثلاثاء",
+          "الأربعاء",
+          "الخميس",
+          "الجمعه",
+          "السبت"
+        ],
+        buttonText: {
+          today: "اليوم",
+          month: "شهر",
+          week: "اسبوع",
+          day: "يوم",
+          list: "قائمة"
+        },
+        header: {
+          left: "prev,next today",
+          center: "title",
+          right: "month,agendaWeek"
+        },
+        events: data
+      };
+    });
+  }
+
+  //for registered user
+  if(this.authService.roleMatch(['Registered'])){
+    console.log("entered Registered User Condition");
+    this.eventService.getAllAppointments().subscribe((data:any) => {
+      this.calendarOptions = {
+        editable: true,
+        isRTL: true,
+        locale: "ar-sa",
+        firstDay: 6,
+        eventLimit: false,
+        // buttonIcons: {
+        //   prev: "left-single-arrow",
+        //   next: "right-single-arrow",
+        //   prevYear: "left-double-arrow",
+        //   nextYear: "right-double-arrow"
+        // },
+        dayNamesShort: [
+          "الأحد",
+          "الإثنين",
+          "الثلاثاء",
+          "الأربعاء",
+          "الخميس",
+          "الجمعه",
+          "السبت"
+        ],
+        buttonText: {
+          today: "اليوم",
+          month: "شهر",
+          week: "اسبوع",
+          day: "يوم",
+          list: "قائمة"
+        },
+        header: {
+          left: "prev,next today",
+          center: "title",
+          right: "month,agendaWeek"
+        },
+        events: data
+      };
+    });
+  }
+    
   }
 
   clickButton(model: any) {
@@ -87,7 +187,6 @@ export class HomeCalendarComponent implements OnInit {
   dayClick(model: any) {
     const clickedDate = new Date(model).toLocaleString("en-US").split(", ");
     //const clickedDate = new Date(model).split(', ');
-    //console.log(this.eventService.allAppointments);
     this.router.navigate(["/dayCalendar", clickedDate[0]]);
   }
 
@@ -146,5 +245,9 @@ export class HomeCalendarComponent implements OnInit {
       }
     };
     this.displayEvent = model;
+  }
+
+  onDepartmentSelected(department : any){
+    this.eventService.getAllAppointmentsByDepartment(department);
   }
 }

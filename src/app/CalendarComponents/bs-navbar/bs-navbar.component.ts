@@ -10,32 +10,40 @@ import { AuthService } from '../../services/auth.service';
 })
 export class BsNavbarComponent implements OnInit {
   Date = new Date();
+  userName:string;
   userClaims: any;
   isLoggedIn : boolean = false;
   constructor(private router: Router,
     //private userService : UserService,
     public authService: AuthService) {
+    // if (localStorage.getItem('userToken') != null) {
+    //   this.isLoggedIn = true;
+    //   if (localStorage.getItem('userCredentials') != null) {
+    //     //   console.log("entered loop");
+    //     this.userName = JSON.stringify(localStorage.getItem('username'));
+    //   }
+    //   // else{
+    //   // console.log("not entered loop");
+    //   // }
+    // }
   }
 
   ngOnInit() {
-    // this.authService.cast.subscribe((data : any)=>{
-    //   this.userClaims = data;
-    //   console.log(this.userClaims);
-    // });
-    // if(this.userClaims){
-    //   this.isLoggedIn = true;
-    // }
-    if(localStorage.getItem('userToken')!= null){
-    this.authService.getUserClaims().subscribe((data : any)=>{
-      this.userClaims = data;
+    if (localStorage.getItem('userToken') != null) {
       this.isLoggedIn = true;
-      //console.log(this.userClaims);
-    });
-    // if(this.userClaims){
-    //      this.isLoggedIn = true;
-    //   }
-  }
-    // if (this.authService.roleMatch(['SuperAdmin']) || this.authService.roleMatch(['SuperAdmin'])) {
+      setTimeout(()=>{
+        this.userName = JSON.stringify(localStorage.getItem('username'));
+        console.log(this.userName);
+      },3000); 
+        
+      //this.userName = JSON.stringify(localStorage.getItem('username'));
+    }
+    
+    // if (localStorage.getItem('userToken') != null) {
+    //   this.authService.getUserClaims().subscribe((data: any) => {
+    //     this.userClaims = data;
+    //     this.isLoggedIn = true;
+    //   });
 
     // }
   }
@@ -46,7 +54,7 @@ export class BsNavbarComponent implements OnInit {
     // localStorage.removeItem('userToken');
     // localStorage.removeItem('userCredentials');
     this.authService.logout();
-    this.router.navigate(['/']);
+    //this.router.navigate(['/']);
   }
 
 }

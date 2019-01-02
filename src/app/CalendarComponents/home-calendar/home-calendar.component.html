@@ -1,6 +1,28 @@
 <div>
   <bs-navbar></bs-navbar>
-  <!-- <p>Display event : {{displayEvent | json}}</p> -->
+  <div class="container col-sm-6" style="align-items: center" *ngIf="departments">
+      <label for="departmentName">Department</label>
+      <select
+        id="departmentName"
+        name="departmentName"
+        #userName="ngModel"
+        [ngClass]="{
+          'txt-error': userName.touched && userName.invalid
+        }"
+        [(ngModel)]="departmentName"
+        class="form-control"
+      >
+      <option value="-1" disabled>--select department--</option>
+      <option 
+              *ngFor="let dept of departments" [value]="dept.departmentId">
+        {{dept.departmentName}}
+      </option>
+      </select>
+      <!-- <option value="-1"></option> -->
+      
+    </div>
+
+
   <div class="container">
     <div *ngIf="calendarOptions">
       <ng-fullcalendar

@@ -20,6 +20,7 @@ export class DayCalendarComponent implements OnInit {
   newEvent:NewEvent;
   clickedDate: string[];
   appointmentCreateEventSuccessful : boolean = false;
+  appointmentEditEventSuccessful : boolean = false;
   getDateClicked: string;//property holding parameters coming from home calendar
   dayCalendarOptions: Options;
   @ViewChild(CalendarComponent) ucCalendarDay : CalendarComponent
@@ -41,8 +42,8 @@ export class DayCalendarComponent implements OnInit {
       //console.log(this.getDateClicked);
     });
     
-    this.eventService.getAllAppointments().subscribe((data:any) =>{
-      console.log(data);
+    this.eventService.getAllAppointments().subscribe((data:any) => {
+      //console.log(data);
       this.dayCalendarOptions = {
         defaultDate: this.getDateClicked,
         defaultView: 'agendaDay',
@@ -55,14 +56,14 @@ export class DayCalendarComponent implements OnInit {
         },
         selectable: true,
         selectHelper: true,
-        slotDuration: moment.duration('00:15:00'),
+        slotDuration: moment.duration('00:30:00'),
         minTime: moment.duration('08:00:00'),
         maxTime: moment.duration('14:10:00'),
         
         events: data
         //selectable: true,
         // selectHelper: true
-      }
+      };
     });
   }
 
@@ -105,23 +106,26 @@ export class DayCalendarComponent implements OnInit {
  
 
   dayClick(model :any) {
-    this.clickedDate = new Date(model.date).toLocaleString('en-US').split(', ');
-    
+    //this.clickedDate = new Date(model.date).toLocaleString('en-US').split(', ');
+    this.clickedDate = new Date(model.date).toLocaleString('en-US',{ timeZone: 'UTC' }).split(', ');
     if(this.clickedDate){
       //console.log(this.clickedDate[0],"enterdayclick");
       if(this.title)
       {
       //console.log(this.title);
       }
-      console.log("no title entered");
+      //console.log("no title entered");
   }
    
   }
 
   eventClick(model: any) {
     console.log(model);
-    
-    console.log(model.event.start._d);
+    //console.log(model.event.start._d);
+    if(model != null)
+    {
+      this.appointmentEditEventSuccessful = true;
+    }
     model = {
       event: {
         id: model.event.id,

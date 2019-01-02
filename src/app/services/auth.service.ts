@@ -1,6 +1,7 @@
 import { Injectable} from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Observable,BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 //import { User } from '../models/user.model';
 //import { element } from 'protractor';
 
@@ -10,23 +11,13 @@ import { Observable,BehaviorSubject } from 'rxjs';
 export class AuthService {
 
   userClaims : any;
-  //private userClaims : any = new BehaviorSubject<any>('');
-  //cast = this.userClaims.asObservable();
   userClaims$ : Observable<Object> ;
   readonly rootUrl = 'http://localhost:1844';
 
-  constructor(private httpClient : HttpClient) {
+  constructor(private httpClient : HttpClient,
+              private router : Router) {
    
    }
-
-  //  ngOnChanges() {
-  //   if(localStorage.getItem('userToken')){
-  //     console.log("entered into authservice constructor if condition");
-  //     this.getUserCredentials();
-      
-  //   }
-  //   console.log("not entered into authservice constructor if condition");
-  //  }
 
   login(userName : string,password : string){
     var data = "username="+userName+"&password="+password+"&grant_type=password";
@@ -40,7 +31,11 @@ export class AuthService {
   logout(){
     localStorage.removeItem('userToken');
     localStorage.removeItem('userCredentials');
+    localStorage.removeItem('username');
+    localStorage.removeItem('userId');
     localStorage.clear();//remove all key-value pairs from localstorage
+    //setti
+    this.router.navigate(['/']);
   }
 
   getUserClaims(){
@@ -55,10 +50,26 @@ export class AuthService {
 
   getUserCredentials(){
     this.getUserClaims().subscribe((data : any)=>{
+      // if(data != null){
+      //   console.log("entered getUserClaims");
         this.userClaims = data;
-        localStorage.setItem('userCredentials',this.userClaims);
+         if(this.userClaims.UserName && this.userClaims.UserId)
+         {
+           // console.log("entered getUserClaims" + this.userClaims.UserName +"and setting local storage");
+           localStorage.setItem('username', this.userClaims.UserName);
+           localStorage.setItem('userId', this.userClaims.UserId);
+           localStorage.setItem('userDepartmentId',this.userClaims.DepartmentId)
+           //console.log(this.userClaims.UserId, this.userClaims.UserName);
+           //}
+           localStorage.setItem('userCredentials', this.userClaims);
+         }
+      // else{
+        //var userCredentials = localStorage.getItem('userCredentials')
+       //console.log(userCredentials);
+      // }
         //cast = this.userClaims.asobser 
-        //console.log(this.userClaims);
+        //var userName = JSON.stringify(localStorage.getItem('userId'));
+        //console.log(userName);
     });
   }
 
@@ -81,5 +92,29 @@ export class AuthService {
       var reqHeader = new HttpHeaders({'No-Auth':'True'});
       return this.httpClient.get(this.rootUrl + '/api/GetAllRoles',{headers: reqHeader});
     }
+
+    subscribeUserDetails(){
+      return this.httpClient.get(this.rootUrl + '/api/getUserDetails');
+    }
+    getUserDetails(){
+      this.subscribeUserDetails().subscribe((data:any)=>{
+
+        this.userClaims = data;
+        console.log(data +"getUserDetails");
+        if(this.userClaims.UserName && this.userClaims.UserId)
+         {
+           // console.log("entered getUserClaims" + this.userClaims.UserName +"and setting local storage");
+           localStorage.setItem('username', this.userClaims.UserName);
+           localStorage.setItem('userId', this.userClaims.UserId);
+           localStorage.setItem('userDepartmentId',this.userClaims.DepartmentId)
+           //console.log(this.userClaims.UserId, this.userClaims.UserName);
+           //}
+           localStorage.setItem('userCredentials', this.userClaims);
+         }
+      });
+
+    }
+
+    
 
 }
