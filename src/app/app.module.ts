@@ -31,6 +31,7 @@ import { DepartmentService } from './services/department.service';
 import { RegisterAdminComponent } from './SuperAdmin/register-admin/register-admin.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { GeneralLoadingComponent } from './common/general-loading/general-loading.component';
+import { ChangePasswordComponent } from './user/change-password/change-password.component';
 //import { RegisterComponent } from './AuthenticationComponent/register/register.component';
 
 @NgModule({
@@ -49,7 +50,8 @@ import { GeneralLoadingComponent } from './common/general-loading/general-loadin
     IndexComponent,
     RegisterAdminComponent,
     ProfileComponent,
-    GeneralLoadingComponent
+    GeneralLoadingComponent,
+    ChangePasswordComponent
     //RegisterComponent
     
     
