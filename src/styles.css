@@ -354,3 +354,14 @@ end of full calendar styles*/
 .general-loading svg circle {
   fill: var(--color-primary);
 }
+
+.site-footer {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 10px 20px;
+  color: #000;
+}
+.site-footer--absolute {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
