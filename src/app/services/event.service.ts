@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 //import { Observable,of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
 import { NewEvent } from '../models/newEvent';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
+//import { catchOperator } from 'rxjs/operator';
 
 
 @Injectable({
@@ -24,6 +25,16 @@ export class EventService {
 
 
   //----------------------http methods-------------------------
+ private handleError(errorResponse : HttpErrorResponse){
+   if(errorResponse.error instanceof ErrorEvent){
+     console.error('Client Side Error:',errorResponse.error.message);
+   }
+   else{
+    console.error('Server Side Error:',errorResponse);
+   }
+   return  throwError('There is a problemwith the service. We are notified & working on it.Please try again later.');
+ }
+
 
  public insertAppointment(
     
@@ -38,10 +49,12 @@ export class EventService {
             appointmentEndDate: end
             
         }
-        return this.httpClient.post(this.rootUrl + '/api/InsertAppointmentData',body);
+        return this.httpClient.post(this.rootUrl + '/api/InsertAppointmentData',body)
+                                    //.pipe(new  RTCError(this.handleError));
   }
 
     public getAllAppointments(){
+      
       //setTimeout(() => {
         //this.allAppointments = this.httpClient.get(this.rootUrl + '/api/getAppointments');
       //}, 2000);
@@ -49,8 +62,12 @@ export class EventService {
       //return this.allAppointments;
     }
 
-    public getAllAppointmentsByDepartment(department){
-
+    public getAllAppointmentsByDepartment(department :string) {
+      console.log("eneter select list web service");
+      //let params = new HttpParams().set("paramName",paramValue).set("paramName2", paramValue2);
+      let params = new HttpParams().set("departmentId",department);
+      var reqHeader = new HttpHeaders({'Content-Type':'application/x-www-urlencoded'});
+      return this.httpClient.get(this.rootUrl + '/api/getAllAppointmentsByDepartmentId',{headers: reqHeader, params: params})
     }
 
     public getAllAppointmentsByUserId(user){

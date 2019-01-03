@@ -55,49 +55,93 @@ export class HomeCalendarComponent implements OnInit {
       //console.log("entered getdepartments");
       this.departments = data;
     });
-    this.eventService.getAllAppointments().subscribe((data:any) => {
-      this.calendarOptions = {
-        editable: true,
-        isRTL: true,
-        locale: "ar-sa",
-        firstDay: 6,
-        eventLimit: false,
-        // buttonIcons: {
-        //   prev: "left-single-arrow",
-        //   next: "right-single-arrow",
-        //   prevYear: "left-double-arrow",
-        //   nextYear: "right-double-arrow"
-        // },
-        dayNamesShort: [
-          "الأحد",
-          "الإثنين",
-          "الثلاثاء",
-          "الأربعاء",
-          "الخميس",
-          "الجمعه",
-          "السبت"
-        ],
-        buttonText: {
-          today: "اليوم",
-          month: "شهر",
-          week: "اسبوع",
-          day: "يوم",
-          list: "قائمة"
-        },
-        header: {
-          left: "prev,next today",
-          center: "title",
-          right: "month,agendaWeek"
-        },
-        events: data
-      };
-    });
+    if(this.departments != null && this.departments == "0"){
+      this.eventService.getAllAppointments().subscribe((data: any) => {
+        this.calendarOptions = {
+          editable: true,
+          isRTL: true,
+          locale: "ar-sa",
+          firstDay: 6,
+          eventLimit: false,
+          // buttonIcons: {
+          //   prev: "left-single-arrow",
+          //   next: "right-single-arrow",
+          //   prevYear: "left-double-arrow",
+          //   nextYear: "right-double-arrow"
+          // },
+          dayNamesShort: [
+            "الأحد",
+            "الإثنين",
+            "الثلاثاء",
+            "الأربعاء",
+            "الخميس",
+            "الجمعه",
+            "السبت"
+          ],
+          buttonText: {
+            today: "اليوم",
+            month: "شهر",
+            week: "اسبوع",
+            day: "يوم",
+            list: "قائمة"
+          },
+          header: {
+            left: "prev,next today",
+            center: "title",
+            right: "month,agendaWeek"
+          },
+          events: data
+        };
+      });
+     }
+     else{
+      this.onDepartmentSelected(this.departments);
+    //}
+    }
+    // this.eventService.getAllAppointments().subscribe((data:any) => {
+    //   this.calendarOptions = {
+    //     editable: true,
+    //     isRTL: true,
+    //     locale: "ar-sa",
+    //     firstDay: 6,
+    //     eventLimit: false,
+    //     // buttonIcons: {
+    //     //   prev: "left-single-arrow",
+    //     //   next: "right-single-arrow",
+    //     //   prevYear: "left-double-arrow",
+    //     //   nextYear: "right-double-arrow"
+    //     // },
+    //     dayNamesShort: [
+    //       "الأحد",
+    //       "الإثنين",
+    //       "الثلاثاء",
+    //       "الأربعاء",
+    //       "الخميس",
+    //       "الجمعه",
+    //       "السبت"
+    //     ],
+    //     buttonText: {
+    //       today: "اليوم",
+    //       month: "شهر",
+    //       week: "اسبوع",
+    //       day: "يوم",
+    //       list: "قائمة"
+    //     },
+    //     header: {
+    //       left: "prev,next today",
+    //       center: "title",
+    //       right: "month,agendaWeek"
+    //     },
+    //     events: data
+    //   };
+    //});
   }
 
   //for admin
   if(this.authService.roleMatch(['Admin'])){
     console.log("entered AdminCondition");
     this.eventService.getAllAppointments().subscribe((data:any) => {
+      console.log(data);
       this.calendarOptions = {
         editable: true,
         isRTL: true,
@@ -247,7 +291,46 @@ export class HomeCalendarComponent implements OnInit {
     this.displayEvent = model;
   }
 
-  onDepartmentSelected(department : any){
-    this.eventService.getAllAppointmentsByDepartment(department);
+  onDepartmentSelected(department){
+    console.log("eneter select list function");
+    this.eventService.getAllAppointmentsByDepartment(department)
+    .subscribe((eventdata : any)=>{
+      console.log(eventdata);
+      this.calendarOptions = {
+        editable: true,
+        isRTL: true,
+        locale: "ar-sa",
+        firstDay: 6,
+        eventLimit: false,
+        // buttonIcons: {
+        //   prev: "left-single-arrow",
+        //   next: "right-single-arrow",
+        //   prevYear: "left-double-arrow",
+        //   nextYear: "right-double-arrow"
+        // },
+        dayNamesShort: [
+          "الأحد",
+          "الإثنين",
+          "الثلاثاء",
+          "الأربعاء",
+          "الخميس",
+          "الجمعه",
+          "السبت"
+        ],
+        buttonText: {
+          today: "اليوم",
+          month: "شهر",
+          week: "اسبوع",
+          day: "يوم",
+          list: "قائمة"
+        },
+        header: {
+          left: "prev,next today",
+          center: "title",
+          right: "month,agendaWeek"
+        },
+        events: eventdata
+      };
+    });
   }
 }

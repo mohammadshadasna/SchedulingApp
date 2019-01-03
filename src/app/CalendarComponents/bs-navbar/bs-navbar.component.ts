@@ -34,7 +34,7 @@ export class BsNavbarComponent implements OnInit {
       setTimeout(()=>{
         this.userName = JSON.stringify(localStorage.getItem('username'));
         console.log(this.userName);
-      },3000); 
+      },10000); 
         
       //this.userName = JSON.stringify(localStorage.getItem('username'));
     }

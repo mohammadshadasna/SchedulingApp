@@ -9,6 +9,7 @@
         [ngClass]="{
           'txt-error': userName.touched && userName.invalid
         }"
+        (ngModelChange)="onDepartmentSelected($event)"
         [(ngModel)]="departmentName"
         class="form-control"
       >
