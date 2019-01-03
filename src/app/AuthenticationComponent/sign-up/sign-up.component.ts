@@ -57,7 +57,9 @@ export class SignUpComponent implements OnInit {
       if (data.Succeeded == true) {
         this.isLoading = false;
         this.resetForm(form);
-        this.toastrService.success("user registration successfull");
+        this.toastrService.success("user registration successfull", "", {
+          positionClass: "toast-top-left"
+        });
         this.router.navigate(["/"]);
       } else {
         this.toastrService.error(data.Errors[0]);
