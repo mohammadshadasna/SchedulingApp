@@ -32,6 +32,7 @@ import { RegisterAdminComponent } from './SuperAdmin/register-admin/register-adm
 import { ProfileComponent } from './user/profile/profile.component';
 import { GeneralLoadingComponent } from './common/general-loading/general-loading.component';
 import { ChangePasswordComponent } from './user/change-password/change-password.component';
+import { FooterComponent } from './common/footer/footer.component';
 //import { RegisterComponent } from './AuthenticationComponent/register/register.component';
 
 @NgModule({
@@ -51,7 +52,8 @@ import { ChangePasswordComponent } from './user/change-password/change-password.
     RegisterAdminComponent,
     ProfileComponent,
     GeneralLoadingComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    FooterComponent
     //RegisterComponent
     
     
