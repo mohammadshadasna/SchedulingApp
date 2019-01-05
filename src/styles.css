@@ -354,3 +354,9 @@ end of full calendar styles*/
 .general-loading svg circle {
   fill: var(--color-primary);
 }
+textarea.form-control.text-area--sm {
+  height: 100px;
+}
+.fc-content{
+  color: #fff;
+}

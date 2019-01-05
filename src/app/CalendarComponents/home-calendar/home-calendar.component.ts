@@ -14,7 +14,8 @@ import { DepartmentService } from "../../services/department.service";
   styleUrls: ["./home-calendar.component.css"]
 })
 export class HomeCalendarComponent implements OnInit {
-  departmentName = "-1";
+  departmentName: number;
+  modifiedtext: string;
   departments;
   //departments : Department[];
   // departments : Department[] = [
@@ -25,19 +26,19 @@ export class HomeCalendarComponent implements OnInit {
   // ];
   userId: string;
   userDepartmentId: string;
-  timezone :"UTC";
+  timezone: "UTC";
   calendarOptions: Options;
   displayEvent: any;
   events = null;
   userRole: string;
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
-  
+
   constructor(
-    private deptService : DepartmentService,
+    private deptService: DepartmentService,
     private eventService: EventService,
     private router: Router,
     private userService: UserService,
-    private authService : AuthService
+    private authService: AuthService
   ) {
     //  this.deptService.getAllDepartments().subscribe((data : any)=>
     // {
@@ -47,15 +48,20 @@ export class HomeCalendarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.departmentName = -1;
     //for SuperAdmin
-    if(this.authService.roleMatch(['SuperAdmin'])){
-      console.log("entered SuperAdminCondition");
-      this.deptService.getAllDepartments().subscribe((data : any)=>
-    {
-      //console.log("entered getdepartments");
-      this.departments = data;
-    });
-    if(this.departments != null && this.departments == "0"){
+    if (this.authService.roleMatch(["SuperAdmin"])) {
+      //console.log("entered SuperAdminCondition");
+      this.deptService.getAllDepartments().subscribe((data: any) => {
+        //console.log("entered getdepartments");
+        this.departments = data;
+        //console.log(data);
+      });
+    }
+    //   if (this.departments == null) {
+    //     console.log("entered this.departments == null condition");
+    if ((this.departmentName = -1)) {
+      console.log("enter department = -1 condition");
       this.eventService.getAllAppointments().subscribe((data: any) => {
         this.calendarOptions = {
           editable: true,
@@ -93,135 +99,135 @@ export class HomeCalendarComponent implements OnInit {
           events: data
         };
       });
-     }
-     else{
-      this.onDepartmentSelected(this.departments);
-    //}
     }
-    // this.eventService.getAllAppointments().subscribe((data:any) => {
-    //   this.calendarOptions = {
-    //     editable: true,
-    //     isRTL: true,
-    //     locale: "ar-sa",
-    //     firstDay: 6,
-    //     eventLimit: false,
-    //     // buttonIcons: {
-    //     //   prev: "left-single-arrow",
-    //     //   next: "right-single-arrow",
-    //     //   prevYear: "left-double-arrow",
-    //     //   nextYear: "right-double-arrow"
-    //     // },
-    //     dayNamesShort: [
-    //       "الأحد",
-    //       "الإثنين",
-    //       "الثلاثاء",
-    //       "الأربعاء",
-    //       "الخميس",
-    //       "الجمعه",
-    //       "السبت"
-    //     ],
-    //     buttonText: {
-    //       today: "اليوم",
-    //       month: "شهر",
-    //       week: "اسبوع",
-    //       day: "يوم",
-    //       list: "قائمة"
-    //     },
-    //     header: {
-    //       left: "prev,next today",
-    //       center: "title",
-    //       right: "month,agendaWeek"
-    //     },
-    //     events: data
-    //   };
-    //});
-  }
+    //   } else {
+    //     console.log("entered this.departments == null condition");
+    //     this.onDepartmentSelected(this.departments);
+    //     //}
+    //   }
+    //   // this.eventService.getAllAppointments().subscribe((data:any) => {
+    //   //   this.calendarOptions = {
+    //   //     editable: true,
+    //   //     isRTL: true,
+    //   //     locale: "ar-sa",
+    //   //     firstDay: 6,
+    //   //     eventLimit: false,
+    //   //     // buttonIcons: {
+    //   //     //   prev: "left-single-arrow",
+    //   //     //   next: "right-single-arrow",
+    //   //     //   prevYear: "left-double-arrow",
+    //   //     //   nextYear: "right-double-arrow"
+    //   //     // },
+    //   //     dayNamesShort: [
+    //   //       "الأحد",
+    //   //       "الإثنين",
+    //   //       "الثلاثاء",
+    //   //       "الأربعاء",
+    //   //       "الخميس",
+    //   //       "الجمعه",
+    //   //       "السبت"
+    //   //     ],
+    //   //     buttonText: {
+    //   //       today: "اليوم",
+    //   //       month: "شهر",
+    //   //       week: "اسبوع",
+    //   //       day: "يوم",
+    //   //       list: "قائمة"
+    //   //     },
+    //   //     header: {
+    //   //       left: "prev,next today",
+    //   //       center: "title",
+    //   //       right: "month,agendaWeek"
+    //   //     },
+    //   //     events: data
+    //   //   };
+    //   //});
+    // }
 
-  //for admin
-  if(this.authService.roleMatch(['Admin'])){
-    console.log("entered AdminCondition");
-    this.eventService.getAllAppointments().subscribe((data:any) => {
-      console.log(data);
-      this.calendarOptions = {
-        editable: true,
-        isRTL: true,
-        locale: "ar-sa",
-        firstDay: 6,
-        eventLimit: false,
-        // buttonIcons: {
-        //   prev: "left-single-arrow",
-        //   next: "right-single-arrow",
-        //   prevYear: "left-double-arrow",
-        //   nextYear: "right-double-arrow"
-        // },
-        dayNamesShort: [
-          "الأحد",
-          "الإثنين",
-          "الثلاثاء",
-          "الأربعاء",
-          "الخميس",
-          "الجمعه",
-          "السبت"
-        ],
-        buttonText: {
-          today: "اليوم",
-          month: "شهر",
-          week: "اسبوع",
-          day: "يوم",
-          list: "قائمة"
-        },
-        header: {
-          left: "prev,next today",
-          center: "title",
-          right: "month,agendaWeek"
-        },
-        events: data
-      };
-    });
-  }
+    // //for admin
+    // if (this.authService.roleMatch(["Admin"])) {
+    //   console.log("entered AdminCondition");
+    //   this.eventService.getAllAppointments().subscribe((data: any) => {
+    //     console.log(data);
+    //     this.calendarOptions = {
+    //       editable: true,
+    //       isRTL: true,
+    //       locale: "ar-sa",
+    //       firstDay: 6,
+    //       eventLimit: false,
+    //       // buttonIcons: {
+    //       //   prev: "left-single-arrow",
+    //       //   next: "right-single-arrow",
+    //       //   prevYear: "left-double-arrow",
+    //       //   nextYear: "right-double-arrow"
+    //       // },
+    //       dayNamesShort: [
+    //         "الأحد",
+    //         "الإثنين",
+    //         "الثلاثاء",
+    //         "الأربعاء",
+    //         "الخميس",
+    //         "الجمعه",
+    //         "السبت"
+    //       ],
+    //       buttonText: {
+    //         today: "اليوم",
+    //         month: "شهر",
+    //         week: "اسبوع",
+    //         day: "يوم",
+    //         list: "قائمة"
+    //       },
+    //       header: {
+    //         left: "prev,next today",
+    //         center: "title",
+    //         right: "month,agendaWeek"
+    //       },
+    //       events: data
+    //     };
+    //   });
+    // }
 
-  //for registered user
-  if(this.authService.roleMatch(['Registered'])){
-    console.log("entered Registered User Condition");
-    this.eventService.getAllAppointments().subscribe((data:any) => {
-      this.calendarOptions = {
-        editable: true,
-        isRTL: true,
-        locale: "ar-sa",
-        firstDay: 6,
-        eventLimit: false,
-        // buttonIcons: {
-        //   prev: "left-single-arrow",
-        //   next: "right-single-arrow",
-        //   prevYear: "left-double-arrow",
-        //   nextYear: "right-double-arrow"
-        // },
-        dayNamesShort: [
-          "الأحد",
-          "الإثنين",
-          "الثلاثاء",
-          "الأربعاء",
-          "الخميس",
-          "الجمعه",
-          "السبت"
-        ],
-        buttonText: {
-          today: "اليوم",
-          month: "شهر",
-          week: "اسبوع",
-          day: "يوم",
-          list: "قائمة"
-        },
-        header: {
-          left: "prev,next today",
-          center: "title",
-          right: "month,agendaWeek"
-        },
-        events: data
-      };
-    });
-  }
-    
+    // //for registered user
+    // if (this.authService.roleMatch(["Registered"])) {
+    //   console.log("entered Registered User Condition");
+    //   this.eventService.getAllAppointments().subscribe((data: any) => {
+    //     this.calendarOptions = {
+    //       editable: true,
+    //       isRTL: true,
+    //       locale: "ar-sa",
+    //       firstDay: 6,
+    //       eventLimit: false,
+    //       // buttonIcons: {
+    //       //   prev: "left-single-arrow",
+    //       //   next: "right-single-arrow",
+    //       //   prevYear: "left-double-arrow",
+    //       //   nextYear: "right-double-arrow"
+    //       // },
+    //       dayNamesShort: [
+    //         "الأحد",
+    //         "الإثنين",
+    //         "الثلاثاء",
+    //         "الأربعاء",
+    //         "الخميس",
+    //         "الجمعه",
+    //         "السبت"
+    //       ],
+    //       buttonText: {
+    //         today: "اليوم",
+    //         month: "شهر",
+    //         week: "اسبوع",
+    //         day: "يوم",
+    //         list: "قائمة"
+    //       },
+    //       header: {
+    //         left: "prev,next today",
+    //         center: "title",
+    //         right: "month,agendaWeek"
+    //       },
+    //       events: data
+    //     };
+    //   });
+    // }
   }
 
   clickButton(model: any) {
@@ -291,46 +297,90 @@ export class HomeCalendarComponent implements OnInit {
     this.displayEvent = model;
   }
 
-  onDepartmentSelected(department){
+  onDepartmentSelected(department) {
     console.log("eneter select list function");
-    this.eventService.getAllAppointmentsByDepartment(department)
-    .subscribe((eventdata : any)=>{
-      console.log(eventdata);
-      this.calendarOptions = {
-        editable: true,
-        isRTL: true,
-        locale: "ar-sa",
-        firstDay: 6,
-        eventLimit: false,
-        // buttonIcons: {
-        //   prev: "left-single-arrow",
-        //   next: "right-single-arrow",
-        //   prevYear: "left-double-arrow",
-        //   nextYear: "right-double-arrow"
-        // },
-        dayNamesShort: [
-          "الأحد",
-          "الإثنين",
-          "الثلاثاء",
-          "الأربعاء",
-          "الخميس",
-          "الجمعه",
-          "السبت"
-        ],
-        buttonText: {
-          today: "اليوم",
-          month: "شهر",
-          week: "اسبوع",
-          day: "يوم",
-          list: "قائمة"
-        },
-        header: {
-          left: "prev,next today",
-          center: "title",
-          right: "month,agendaWeek"
-        },
-        events: eventdata
-      };
-    });
+    this.eventService
+      .getAllAppointmentsByDepartment(department)
+      .subscribe((eventdata: any) => {
+        console.log(eventdata);
+        this.calendarOptions = {
+          editable: true,
+          isRTL: true,
+          locale: "ar-sa",
+          firstDay: 6,
+          eventLimit: false,
+          dayNamesShort: [
+            "الأحد",
+            "الإثنين",
+            "الثلاثاء",
+            "الأربعاء",
+            "الخميس",
+            "الجمعه",
+            "السبت"
+          ],
+          buttonText: {
+            today: "اليوم",
+            month: "شهر",
+            week: "اسبوع",
+            day: "يوم",
+            list: "قائمة"
+          },
+          header: {
+            left: "prev,next today",
+            center: "title",
+            right: "month,agendaWeek"
+          },
+          events: eventdata
+        };
+      });
+  }
+
+  onSelectingDepartment(val: any) {
+    console.log("enter event change of select list");
+    if (this.authService.roleMatch(["SuperAdmin"])) {
+      console.log("entered SuperAdminCondition");
+      this.deptService.getAllDepartments().subscribe((data: any) => {
+        //console.log("entered getdepartments");
+        this.departments = data;
+        console.log(data);
+      });
+      this.eventService
+        .getAllAppointmentsByDepartment(val)
+        .subscribe((eventdata: any) => {
+          console.log(eventdata);
+          this.calendarOptions = {
+            editable: true,
+            isRTL: true,
+            locale: "ar-sa",
+            firstDay: 6,
+            eventLimit: false,
+            dayNamesShort: [
+              "الأحد",
+              "الإثنين",
+              "الثلاثاء",
+              "الأربعاء",
+              "الخميس",
+              "الجمعه",
+              "السبت"
+            ],
+            buttonText: {
+              today: "اليوم",
+              month: "شهر",
+              week: "اسبوع",
+              day: "يوم",
+              list: "قائمة"
+            },
+            header: {
+              left: "prev,next today",
+              center: "title",
+              right: "month,agendaWeek"
+            },
+            events: eventdata
+          };
+          //this.ucCalendar.fullCalendar('renderEvent', eventData, true);
+          //this.ucCalendar.fullCalendar("render",{});
+          console.log("after render");
+        });
+    }
   }
 }

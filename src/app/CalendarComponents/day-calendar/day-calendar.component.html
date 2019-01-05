@@ -2,7 +2,6 @@
 <bs-navbar></bs-navbar>
 <!--end of navbar showing work-->
 
-
 <!--start of ngFullCcalendar-->
 
 <div>
@@ -13,13 +12,13 @@
       [options]="dayCalendarOptions"
       (dayClick)="dayClick($event.detail)"
       (eventClick)="eventClick($event.detail)"
+      (refetchEvents)="render2"
       [(eventsModel)]="events"
     >
     </ng-fullcalendar>
   </div>
 </div>
 <!--end of ng-fullCalendar-->
-
 
 <!--modal for creating appointment-->
 
@@ -39,9 +38,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="newEvent">New Apppointment</h4>
-          
-            
+          <h4 class="modal-title" id="newEvent">حجز موعد جديد</h4>
+
           <button
             type="button"
             class="close"
@@ -53,104 +51,200 @@
           </button>
         </div>
 
-        <form #modalForm="ngForm" (ngSubmit)="OnSubmit(title.value)">
+        <form #modalForm="ngForm" (ngSubmit)="OnSubmit(title.value,description.value)">
           <div class="modal-body">
-            
-            <div class="form-group">
-              <label for="title"><b>Title</b></label>
-              <input
-                #title="ngModel"
-                ngModel
-                name="title"
-                id="title"
-                type="text"
-                class="form-control"
-                required
-              />
-              <div
-                class="alert alert-danger"
-                *ngIf="title.touched && title.invalid"
-              >
-                Title is required.
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>القسم</b></label>
+                  <select
+                    id="departmentName"
+                    name="departmentName"
+                    #userName="ngModel"
+                    [ngClass]="{
+                      'txt-error': userName.touched && userName.invalid
+                    }"
+                    (ngModelChange)="onDepartmentSelected($event)"
+                    [(ngModel)]="departmentName"
+                    class="form-control"
+                  >
+                    <option value="-1" disabled>--select department--</option>
+                    <option
+                      *ngFor="let dept of departments"
+                      [value]="dept.departmentId"
+                    >
+                      {{ dept.departmentName }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="title"><b>عنوان الموعد</b></label>
+                  <input
+                    #title="ngModel"
+                    ngModel
+                    name="title"
+                    id="title"
+                    type="text"
+                    class="form-control"
+                    required
+                  />
+                  <div
+                    class="alert alert-danger"
+                    *ngIf="title.touched && title.invalid"
+                  >
+                    Title is required.
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for=""><b>التفاصيل</b></label>
+                  <textarea
+                   #description="ngModel"
+                    ngModel
+                    name="description"
+                    id="description"
+                    cols="15"
+                    rows="10"
+                    class="form-control text-area--sm"
+                    required
+                  ></textarea>
+                  <div
+                    class="alert alert-danger"
+                    *ngIf="description.touched && description.invalid"
+                  >
+                  Description is required.
+                  </div>
+                </div>
               </div>
             </div>
-            
           </div>
           <div class="modal-footer">
-            
-            <button
-              type="button"
-              class="btn btn-secondary"
-              (click)="clickedDate = !clickedDate"
-              data-dismiss="modal"
-            >
-              Cancel
-            </button>
             <button
               class="btn btn-success"
               type="submit"
               [disabled]="!modalForm.valid"
             >
-              Create Event
+              إنشاء
             </button>
           </div>
         </form>
       </div>
     </div>
   </div>
-</div> 
+</div>
 <!--end of modal for creating appointment-->
-
 
 <!--Modal for appointmentEvent click-->
 
-  <div *ngIf="appointmentEditEventSuccessful">
-
-    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-backdrop fade show"  (click)="appointmentEditEventSuccessful = !appointmentEditEventSuccessful"></div>
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-              <h4 class="modal-title" id="newEvent">Edit Apppointment</h4>
-            <button type="button" class="close" (click)="appointmentEditEventSuccessful = !appointmentEditEventSuccessful" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form
-          #modalForm="ngForm"
-           (ngSubmit)="getData(f.value)">
+<div *ngIf="appointmentEditEventSuccessful">
+  <div
+    class="modal fade show d-block"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div
+      class="modal-backdrop fade show"
+      (click)="appointmentEditEventSuccessful = !appointmentEditEventSuccessful"
+    ></div>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="newEvent">تعديل موعد</h4>
+          <button
+            type="button"
+            class="close"
+            (click)="
+              appointmentEditEventSuccessful = !appointmentEditEventSuccessful
+            "
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form #modalForm="ngForm">
           <div class="modal-body">
-            <form>
-                  <div class="form-group">
-                      <label for="title" ><b>Title</b></label>
-                      <input
-                      #title="ngModel"
-                      ngModel
-                       name="title"
-                       id="title"
-                       type="text"
-                       class="form-control"
-                       required
-                       >
-                       <div
-                       class="alert alert-danger"
-                       *ngIf="title.touched && title.invalid"
-                       >
-                       Title is required.
-                      </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>القسم</b></label>
+                  <select
+                    id="departmentName"
+                    name="departmentName"
+                    #userName="ngModel"
+                    [ngClass]="{
+                      'txt-error': userName.touched && userName.invalid
+                    }"
+                    (ngModelChange)="onDepartmentSelected($event)"
+                    [(ngModel)]="departmentName"
+                    class="form-control"
+                  >
+                    <option value="-1" disabled>--select department--</option>
+                    <option
+                      *ngFor="let dept of departments"
+                      [value]="dept.departmentId"
+                    >
+                      {{ dept.departmentName }}
+                    </option>
+                  </select>
+                  <div
+                    class="alert alert-danger"
+                    *ngIf="departmentName.touched && departmentName.invalid"
+                  >
+                    Department Name is required.
                   </div>
-              </form>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="title"><b>عنوان الموعد</b></label>
+                  <input
+                    #title="ngModel"
+                    ngModel
+                    name="title"
+                    id="title"
+                    type="text"
+                    class="form-control"
+                    required
+                  />
+                  <div
+                    class="alert alert-danger"
+                    *ngIf="title.touched && title.invalid"
+                  >
+                    Title is required.
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for=""><b>التفاصيل</b></label>
+                  <textarea
+                    name=""
+                    id=""
+                    cols="15"
+                    rows="10"
+                    class="form-control text-area--sm"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-secondary"
-              *ngIf="!appointmentEditEventSuccessful"
-              (click)="appointmentEditEventSuccessful = !appointmentEditEventSuccessful" data-dismiss="modal">Cancel</button>
-              <button  class="btn btn-success">Confirm Event</button>
+            <button class="btn btn-danger" (click)="confirmDelete()">
+              حذف الموعد
+            </button>
+            <button class="btn btn-success">تعديل</button>
           </div>
         </form>
-        </div>
       </div>
     </div>
-
   </div>
+</div>
 <!--end of modal Event Click in day calendar-->

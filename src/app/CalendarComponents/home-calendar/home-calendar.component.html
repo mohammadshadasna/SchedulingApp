@@ -9,16 +9,18 @@
         [ngClass]="{
           'txt-error': userName.touched && userName.invalid
         }"
-        (ngModelChange)="onDepartmentSelected($event)"
+        (ngModelChange)="onSelectingDepartment($event)"
         [(ngModel)]="departmentName"
         class="form-control"
       >
-      <option value="-1" disabled>--select department--</option>
+      <option value= "-1" disabled>--select department--</option>
       <option 
               *ngFor="let dept of departments" [value]="dept.departmentId">
         {{dept.departmentName}}
       </option>
       </select>
+      <br>
+      selected value is {{departmentName}}
       <!-- <option value="-1"></option> -->
       
     </div>
