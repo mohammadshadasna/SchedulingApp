@@ -2,9 +2,31 @@
 <bs-navbar></bs-navbar>
 <!--end of navbar showing work-->
 
+<!--start of department dropdown-->
+
+<!-- <div class="container col-sm-6" style="align-items: center"
+  *ngIf="!authService.roleMatch(['Admin'])">
+  <label for="departmentName"><b>الإدارات</b></label>
+  <select id="departmentName" name="departmentName" #userName="ngModel" [ngClass]="{
+        'txt-error': userName.touched && userName.invalid
+      }"
+    (ngModelChange)="onSelectingDepartment($event)" [(ngModel)]="departmentName" class="form-control">
+    <option value="-1" disabled>--اختر إدارة--</option>
+    <option *ngFor="let dept of departments" [value]="dept.departmentId">
+      {{ dept.departmentName }}
+    </option>
+  </select>
+  <br />
+  selected value is {{ departmentName }}
+  <option value="-1"></option> 
+</div> -->
+
+  <!--end of department dropdown-->
+
+
 <!--start of ngFullCcalendar-->
 
-<div>
+<div class="container">
   <div *ngIf="dayCalendarOptions">
     <ng-fullcalendar
       #ucCalendarDay
@@ -22,7 +44,7 @@
 
 <!--modal for creating appointment-->
 
-<div *ngIf="clickedDate && !appointmentCreateEventSuccessful">
+<div *ngIf="startDate && !appointmentCreateEventSuccessful">
   <div
     class="modal fade show d-block"
     id="exampleModal"
@@ -33,7 +55,7 @@
   >
     <div
       class="modal-backdrop fade show"
-      (click)="clickedDate = !clickedDate"
+      (click)="startDate = !startDate"
     ></div>
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -43,7 +65,7 @@
           <button
             type="button"
             class="close"
-            (click)="clickedDate = !clickedDate"
+            (click)="startDate = !startDate"
             data-dismiss="modal"
             aria-label="Close"
           >
@@ -52,10 +74,11 @@
         </div>
 
         <form #modalForm="ngForm" (ngSubmit)="OnSubmit(title.value,description.value)">
+            <!-- <form #modalForm="ngForm" (ngSubmit)="OnSubmit(title.value,departmentName.value,description.value)"> -->
           <div class="modal-body">
             <div class="row">
-              <div class="col-sm-6">
-                <div class="form-group">
+              <!-- <div class="col-sm-6">
+                <div class="form-group" *ngIf="!authService.roleMatch(['Admin'])">
                   <label for=""><b>القسم</b></label>
                   <select
                     id="departmentName"
@@ -77,8 +100,11 @@
                     </option>
                   </select>
                 </div>
-              </div>
-              <div class="col-sm-6">
+                <!-- <div class="form-group">
+                  <label for=""><b>القسم</b></label>
+                </div> 
+              </div> -->
+              <div class="col-sm">
                 <div class="form-group">
                   <label for="title"><b>عنوان الموعد</b></label>
                   <input
@@ -89,12 +115,13 @@
                     type="text"
                     class="form-control"
                     required
+                    
                   />
                   <div
                     class="alert alert-danger"
                     *ngIf="title.touched && title.invalid"
                   >
-                    Title is required.
+                    <b>العنوان مطلوب</b>
                   </div>
                 </div>
               </div>
@@ -115,7 +142,7 @@
                     class="alert alert-danger"
                     *ngIf="description.touched && description.invalid"
                   >
-                  Description is required.
+                  <b>الوصف مطلوب</b>
                   </div>
                 </div>
               </div>
@@ -168,10 +195,11 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form #modalForm="ngForm">
+        <!-- <form #editModalForm="ngForm"(ngSubmit)="OnEditSubmit(title.value,departmentName.value,description.value)"> -->
+            <form #editModalForm="ngForm"(ngSubmit)="OnEditSubmit(title.value,description.value)">
           <div class="modal-body">
             <div class="row">
-              <div class="col-sm-6">
+              <!-- <div class="col-sm-6">
                 <div class="form-group">
                   <label for=""><b>القسم</b></label>
                   <select
@@ -185,7 +213,7 @@
                     [(ngModel)]="departmentName"
                     class="form-control"
                   >
-                    <option value="-1" disabled>--select department--</option>
+                     <option value="-1" disabled>--select department--</option> 
                     <option
                       *ngFor="let dept of departments"
                       [value]="dept.departmentId"
@@ -200,14 +228,14 @@
                     Department Name is required.
                   </div>
                 </div>
-              </div>
+              </div> -->
 
-              <div class="col-sm-6">
+              <div class="col-sm">
                 <div class="form-group">
                   <label for="title"><b>عنوان الموعد</b></label>
                   <input
                     #title="ngModel"
-                    ngModel
+                    [(ngModel)]="userEvent.title"
                     name="title"
                     id="title"
                     type="text"
@@ -226,8 +254,10 @@
                 <div class="form-group">
                   <label for=""><b>التفاصيل</b></label>
                   <textarea
-                    name=""
-                    id=""
+                  #description="ngModel"
+                    name="description"
+                    id="description"
+                    [(ngModel)]="userEvent.description"
                     cols="15"
                     rows="10"
                     class="form-control text-area--sm"
@@ -237,10 +267,10 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-danger" (click)="confirmDelete()">
+            <button class="btn btn-success" type="submit">تؤكد</button>
+            <button class="btn btn-danger" type="button" (click)="confirmDelete()">
               حذف الموعد
-            </button>
-            <button class="btn btn-success">تعديل</button>
+            </button>          
           </div>
         </form>
       </div>

@@ -10,6 +10,7 @@ import { AuthService } from "../../services/auth.service";
   styleUrls: ["./sign-in.component.css"]
 })
 export class SignInComponent implements OnInit {
+  signIn = true;
   user$;
   user = {};
   loginUser: LoginUser;
@@ -25,10 +26,7 @@ export class SignInComponent implements OnInit {
     this.loginUser = new LoginUser("", "");
   }
 
-  ngOnInit() {
-  }
-
-  
+  ngOnInit() {}
 
   OnSubmit(username: string, password: string) {
     //var userdata : string;
@@ -36,16 +34,22 @@ export class SignInComponent implements OnInit {
     this.isLoading = true;
     this.authService.login(username, password).subscribe(
       (data: any) => {
-        
+        //console.log(data.role +'onsubmit');
         //userdata = JSON.stringify(data);
         //this.isLoading = false;
         localStorage.setItem("userToken", data.access_token);
         localStorage.setItem("userRoles", data.role);
         this.authService.getUserCredentials();
+        this.isLoading = false;
         //this.authService.getUserDetails();
-          this.isLoading = false;
+        //if (this.authService.roleMatch(["Registered"])) {
+          //if (data.role == ["Registered"]) {
+          //console.log("enteryes");
+          //this.router.navigate(["/selectDepartment"]);
+        //} else {
           this.router.navigate(["/homeCalendar"]);
-        
+        //}
+
         //neeche ka code tab use karenge jab index page design kar liye honge
         // console.log(data.role);
         // if(this.authService.roleMatch(['SuperAdmin']))
@@ -61,8 +65,7 @@ export class SignInComponent implements OnInit {
         this.isLoading = false;
         this.isLoginError = true;
       }
-      
     );
-   // console.log(userdata);
+    // console.log(userdata);
   }
 }

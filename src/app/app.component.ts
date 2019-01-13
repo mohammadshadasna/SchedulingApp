@@ -1,20 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CalendarComponent } from 'ng-fullcalendar';
-import { Options } from 'fullcalendar';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { CalendarComponent } from "ng-fullcalendar";
+import { Options } from "fullcalendar";
 //import { EventSesrvice } from './event.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: [ './app.component.css' ]
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
+  isNavbarShown = true;
   // calendarOptions: Options;
   // displayEvent: any;
   // events = null;
   // @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
   // constructor(protected eventService: EventSesrvice) { }
-
   // ngOnInit() {
   //   this.eventService.getEvents().subscribe(data => {
   //   this.calendarOptions = {

@@ -1,6 +1,6 @@
-<header class="main-header">
+<header class="main-header" >
   <div class="container d-flex justify-content-between align-items-center">
-    <a routerLink="/">
+    <a routerLink="/homeCalendar">
       <img class="main-header__logo" src="../assets/images/logo.png" alt=""
     /></a>
 
@@ -10,14 +10,14 @@
           <a routerLink="/homeCalendar" class="main-nav__link">الرئيسية</a>
         </li>
         <li class="main-nav__item">
-          <a routerLink="#0" class="main-nav__link">التقارير</a>
+          <a routerLink="/reports" class="main-nav__link">التقارير</a>
         </li>
-        <li class="main-nav__item">
+        <!-- <li class="main-nav__item">
           <a routerLink="#0" class="main-nav__link">المواعيد</a>
-        </li>
-        <li class="main-nav__item" *ngIf="authService.roleMatch(['SuperAdmin']) || authService.roleMatch(['Admin']) ">
+        </li> -->
+        <!-- <li class="main-nav__item" *ngIf="authService.roleMatch(['SuperAdmin']) || authService.roleMatch(['Admin']) ">
           <a routerLink="/adminRegister" class="main-nav__link">UpdateUser</a>
-        </li>
+        </li> -->
       </ul>
     </nav>
     <!--
@@ -35,9 +35,9 @@
       <!-- <span class="drop-down__current">إسم المستخدم</span> -->
       <span class="drop-down__current">{{userName}}</span>
       <ul class="drop-down__menu">
-        <li class="drop-down__item">
+        <!-- <li class="drop-down__item">
           <a routerLink="/profile" class="drop-down__link">profile</a>
-        </li>
+        </li> -->
         <li class="drop-down__item">
           <!-- <a class="drop-down__link" (click)="Logout">logout</a> -->
           <span class="drop-down__link" (click)="Logout()">logout</span>

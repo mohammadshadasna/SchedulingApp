@@ -8,6 +8,7 @@ import {
 } from "@angular/common/http";
 import { NewEvent } from "../models/newEvent";
 import { Observable, of, throwError } from "rxjs";
+import { Appointment } from "../models/appointment.model";
 //import { catchOperator } from 'rxjs/operator';
 
 @Injectable({
@@ -16,8 +17,9 @@ import { Observable, of, throwError } from "rxjs";
 export class EventService {
   //-----------------------properties--------------------
   rootUrl = "http://localhost:1844";
-  allAppointments: Observable<Object>;
+  //allAppointments: Observable<Object>;
   userId;
+  selectedAppointment: Appointment;
   //renderedAppointments : NewEvent[];
 
   //---------------------------helper methods---------------
@@ -39,10 +41,9 @@ export class EventService {
     title: string,
     start: string,
     end: string,
-    description: string,
-    departmentFor: number,
+    description: string,  
+    departmentFor: string,
     UserId: string
-    //   description: string
   ) {
     var body = {
       appointmentTitle: title,
@@ -59,21 +60,60 @@ export class EventService {
     //.pipe(new  RTCError(this.handleError));
   }
 
+  public deleteAppointment(
+    appointmentId: number
+    //,
+    //appointmentCancelReason : string
+  ) {
+    var body = {
+      Id: appointmentId
+      //,
+      //appointmentDescription: appointmentCancelReason
+    };
+    return this.httpClient.post(this.rootUrl + "/api/DeleteAppointment", body);
+  }
+
+  public updateAppointment(
+    appointmentId: number,
+    title: string,
+    //start: string,
+    //end: string,
+    backgroundColor: string,
+    description: string,
+    departmentFor: string,
+    UserId: string
+  ) {
+    var body = {
+      appointmentTitle: title,
+      //appointmentStart: start,
+      //appointmentEnd: end,
+      appointmentBGColor: backgroundColor,
+      appointmentDescription: description,
+      appointmentDepartmentId: departmentFor,
+      userId: UserId,
+      Id: appointmentId
+    };
+    console.log(body);
+    //var reqHeader = new HttpHeaders({'Content-Type':'application/x-www-urlencoded'});
+    return this.httpClient.post(
+      this.rootUrl + "/api/UpdateAppointmentData",
+      body
+    );
+  }
+
   public getAllAppointments() {
-    //setTimeout(() => {
-    //this.allAppointments = this.httpClient.get(this.rootUrl + '/api/getAppointments');
-    //}, 2000);
     return this.httpClient.get(this.rootUrl + "/api/getAllAppointments");
-    //return this.allAppointments;
   }
 
   public getAllAppointmentsByDepartment(department: string) {
     console.log("eneter select list web service");
+
     //let params = new HttpParams().set("paramName",paramValue).set("paramName2", paramValue2);
     let params = new HttpParams().set("departmentId", department);
     var reqHeader = new HttpHeaders({
       "Content-Type": "application/x-www-urlencoded"
     });
+
     return this.httpClient.get(
       this.rootUrl + "/api/getAllAppointmentsByDepartmentId",
       { headers: reqHeader, params: params }

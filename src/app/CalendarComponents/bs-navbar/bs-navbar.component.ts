@@ -1,21 +1,23 @@
-import { Component, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 //import { UserService } from '../../services/user.service';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from "../../services/auth.service";
 
 @Component({
-  selector: 'bs-navbar',
-  templateUrl: './bs-navbar.component.html',
-  styleUrls: ['./bs-navbar.component.css']
+  selector: "bs-navbar",
+  templateUrl: "./bs-navbar.component.html",
+  styleUrls: ["./bs-navbar.component.css"]
 })
 export class BsNavbarComponent implements OnInit {
   Date = new Date();
-  userName:string;
+  userName: string;
   userClaims: any;
-  isLoggedIn : boolean = false;
-  constructor(private router: Router,
+  isLoggedIn: boolean = false;
+  constructor(
+    private router: Router,
     //private userService : UserService,
-    public authService: AuthService) {
+    public authService: AuthService
+  ) {
     // if (localStorage.getItem('userToken') != null) {
     //   this.isLoggedIn = true;
     //   if (localStorage.getItem('userCredentials') != null) {
@@ -29,16 +31,16 @@ export class BsNavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (localStorage.getItem('userToken') != null) {
+    if (localStorage.getItem("userToken") != null) {
       this.isLoggedIn = true;
-      setTimeout(()=>{
-        this.userName = JSON.stringify(localStorage.getItem('username'));
+      setTimeout(() => {
+        this.userName = JSON.stringify(localStorage.getItem("username"));
         console.log(this.userName);
-      },10000); 
-        
+      }, 500);
+
       //this.userName = JSON.stringify(localStorage.getItem('username'));
     }
-    
+
     // if (localStorage.getItem('userToken') != null) {
     //   this.authService.getUserClaims().subscribe((data: any) => {
     //     this.userClaims = data;
@@ -48,13 +50,10 @@ export class BsNavbarComponent implements OnInit {
     // }
   }
 
-
-
   Logout() {
     // localStorage.removeItem('userToken');
     // localStorage.removeItem('userCredentials');
     this.authService.logout();
     //this.router.navigate(['/']);
   }
-
 }

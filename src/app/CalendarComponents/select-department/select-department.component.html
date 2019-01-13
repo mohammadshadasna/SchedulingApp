@@ -1,0 +1,25 @@
+<bs-navbar></bs-navbar>
+  <div class="container col-sm-6" style="align-items: center" *ngIf="departments">
+      <label for="departmentName">Department</label>
+      <select
+        id="departmentName"
+        name="departmentName"
+        #userName="ngModel"
+        [ngClass]="{
+          'txt-error': userName.touched && userName.invalid
+        }"
+        (ngModelChange)="onSelectingDepartment($event)"
+        [(ngModel)]="departmentName"
+        class="form-control"
+      >
+      <option value= "-1" disabled>--select department--</option>
+      <option 
+              *ngFor="let dept of departments" [value]="dept.departmentId">
+        {{dept.departmentName}}
+      </option>
+      </select>
+      <br>
+      selected value is {{departmentName}}
+      <!-- <option value="-1"></option> -->
+      
+    </div>

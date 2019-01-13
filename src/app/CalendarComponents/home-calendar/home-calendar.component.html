@@ -1,30 +1,52 @@
 <div>
   <bs-navbar></bs-navbar>
-  <div class="container col-sm-6" style="align-items: center" *ngIf="departments">
-      <label for="departmentName">Department</label>
-      <select
-        id="departmentName"
-        name="departmentName"
-        #userName="ngModel"
-        [ngClass]="{
-          'txt-error': userName.touched && userName.invalid
-        }"
-        (ngModelChange)="onSelectingDepartment($event)"
-        [(ngModel)]="departmentName"
-        class="form-control"
+  <!-- *ngIf="!this.userService.roleMatch(['Admin'])" <div class="container col-sm-6" style="align-items: center" *ngIf="departments"> -->
+  <div class="container">
+    <div class="row">
+      <div
+        class=" col-sm-3 offset-sm-3"
+        style="align-items: center"
+        *ngIf="!currentUserDepartmentId"
       >
-      <option value= "-1" disabled>--select department--</option>
-      <option 
-              *ngFor="let dept of departments" [value]="dept.departmentId">
-        {{dept.departmentName}}
-      </option>
-      </select>
-      <br>
-      selected value is {{departmentName}}
-      <!-- <option value="-1"></option> -->
-      
+        <!-- <label for="departmentName"><b>الإدارات</b></label> -->
+        <select
+          id="departmentName"
+          name="departmentName"
+          #userName="ngModel"
+          [ngClass]="{
+            'txt-error': userName.touched && userName.invalid
+          }"
+          (ngModelChange)="onSelectingDepartment($event)"
+          [(ngModel)]="departmentName"
+          class="form-control"
+        >
+          <option value="-1">--اختر إدارة--</option>
+          <option *ngFor="let dept of departments" [value]="dept.departmentId">
+            {{ dept.departmentName }}
+          </option>
+        </select>
+        <br />
+        <!-- selected value is {{ departmentName }} -->
+        <!-- <option value="-1"></option> -->
+      </div>
+      <div class="col-sm-6">
+        <div class="calendar-legend">
+          <div class="calendar-legend__item">
+            <span
+              class="calendar-legend__color calendar-legend__color--new"
+            ></span>
+            <span class="calendar-legend__text">طلب جديد</span>
+          </div>
+          <div class="calendar-legend__item">
+            <span
+              class="calendar-legend__color calendar-legend__color--confirmed"
+            ></span>
+            <span class="calendar-legend__text">طلب تم تأكيده</span>
+          </div>
+        </div>
+      </div>
     </div>
-
+  </div>
 
   <div class="container">
     <div *ngIf="calendarOptions">

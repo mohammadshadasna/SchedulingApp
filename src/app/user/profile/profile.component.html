@@ -1,63 +1,165 @@
-<div class="row">
+<!-- <div class="row">
   <div class="col-md-6">
-      <form #f="ngForm" (ngSubmit)="save(f.value)">
-        <div class="form-group">
-          <label for="title">Title</label>
-          <input #title="ngModel" [(ngModel)]="user.UserName" name="title" id="title" type="text" class="form-control" required>
-          <div class="alert alert-danger" *ngIf="title.touched && title.invalid">
-            Title is required.
-          </div>
+    <form #f="ngForm" (ngSubmit)="save(f.value)">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          #title="ngModel"
+          [(ngModel)]="user.UserName"
+          name="title"
+          id="title"
+          type="text"
+          class="form-control"
+          required
+        />
+        <div class="alert alert-danger" *ngIf="title.touched && title.invalid">
+          Title is required.
         </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <div class="input-group mb-3">
-            <!-- <div class="input-group-prepend">
-              <span class="input-group-text">SR</span>
-            </div> -->
-            <input #email="ngModel" [(ngModel)]="user.Email" name="email" id="email" type="text" class="form-control" required [min]="0">
-          </div>
-          <div class="alert alert-danger" *ngIf="email.touched && email.invalid">
-            <div *ngIf="email.errors.required">email is required.</div>
-            <div *ngIf="email.errors.min">email should be 0 or higher.</div>
-          </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-group mb-3">
+          <input
+            #email="ngModel"
+            [(ngModel)]="user.Email"
+            name="email"
+            id="email"
+            type="text"
+            class="form-control"
+            required
+            [min]="0"
+          />
         </div>
-      
-        <div class="form-group">
-          <label for="firstName">FirstName</label>
-          <div class="input-form mb-3"></div>
-          <input #firstName="ngModel" [(ngModel)]="user.FirstName" name="firstName" id="firstName" type="text" class="form-control" required [min]="0">
-          <!-- <select #firstName="ngModel" [(ngModel)]="user.FirstName" name="firstName" id="firstName" class="form-control" required>
-            <option value=""></option>
-            <option *ngFor="let c of categories$ | async" [value]="c.$key">
-              {{c.name}}
-            </option>
-          </select> -->
-          <div class="alert alert-danger" *ngIf="firstName.touched && firstName.invalid">
-            firstName is required.
-          </div>
+        <div class="alert alert-danger" *ngIf="email.touched && email.invalid">
+          <div *ngIf="email.errors.required">email is required.</div>
+          <div *ngIf="email.errors.min">email should be 0 or higher.</div>
         </div>
-        <div class="form-group">
-          <label for="imageUrl">ImageUrl</label>
-          <input #imageUrl="ngModel" [(ngModel)]="product.imageUrl" name="imageUrl" id="imageUrl" type="text" class="form-control" required url>
-          <div class="alert alert-danger" *ngIf="imageUrl.touched && imageUrl.invalid">
-            <div *ngIf="imageUrl.errors.required">ImageUrl is required.</div>
-            <div *ngIf="imageUrl.errors.url">Please enter valid URL.</div>
-          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="firstName">FirstName</label>
+        <div class="input-form mb-3"></div>
+        <input
+          #firstName="ngModel"
+          [(ngModel)]="user.FirstName"
+          name="firstName"
+          id="firstName"
+          type="text"
+          class="form-control"
+          required
+          [min]="0"
+        />
+
+        <div
+          class="alert alert-danger"
+          *ngIf="firstName.touched && firstName.invalid"
+        >
+          firstName is required.
         </div>
-        <button class="btn btn-primary">Save</button>
-        <button class="btn btn-danger" (click)="delete()" type="button">Delete</button>
-      </form>
+      </div>
+      <div class="form-group">
+        <label for="imageUrl">ImageUrl</label>
+        <input
+          #imageUrl="ngModel"
+          [(ngModel)]="product.imageUrl"
+          name="imageUrl"
+          id="imageUrl"
+          type="text"
+          class="form-control"
+          required
+          url
+        />
+        <div
+          class="alert alert-danger"
+          *ngIf="imageUrl.touched && imageUrl.invalid"
+        >
+          <div *ngIf="imageUrl.errors.required">ImageUrl is required.</div>
+          <div *ngIf="imageUrl.errors.url">Please enter valid URL.</div>
+        </div>
+      </div>
+      <button class="btn btn-primary">Save</button>
+      <button class="btn btn-danger" (click)="delete()" type="button">
+        Delete
+      </button>
+    </form>
   </div>
-    <div class="col-md-6">
-        <div  *ngIf="product.title" class="card" style="width: 18rem;">
-          <!-- <img class="card-img-top" [src]="imageUrl.value" >//this line used when not using two-way binding -->
-          <img class="card-img-top" [src]="product.imageUrl" *ngIf="product.imageUrl" ><!--*ngIf use kiya kynki initially imageUrl ki value null rehti hai to console pe null ki error aa rahi, usko durr kiya hai-->
-          <div class="card-body">
-            <!-- <h5 class="card-title">{{title.value}}</h5>//this line used when not using two-way binding -->
-            <h5 class="card-title">{{product.title}}</h5>
-            <!-- <p class="card-text">{{email.value | currency:'SAR':true}}</p> this line used when not using two-way binding -->
-            <p class="card-text">{{product.email | currency:'SAR'}}</p> 
-          </div>
-        </div>
+  <div class="col-md-6">
+    <div *ngIf="product.title" class="card" style="width: 18rem;">
+      <img
+        class="card-img-top"
+        [src]="product.imageUrl"
+        *ngIf="product.imageUrl"
+      />
+      <div class="card-body">
+        <h5 class="card-title">{{ product.title }}</h5>
+
+        <p class="card-text">{{ product.email | currency: "SAR" }}</p>
+      </div>
     </div>
-</div>
+  </div>
+</div> -->
+
+<form class="emp-form" #userForm="ngForm" (ngSubmit) ="onSubmit(userForm)">
+  <input type="hidden" name="userId" #userId="ngModel" [(ngModel)]="userService.loggedInUser.userId">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <input
+        class="form-control"
+        name="FirstName"
+        #FirstName="ngModel"
+        [(ngModel)]="userService.loggedInUser.FirstName"
+        placeholder="الاسم الاول"
+      />
+    </div>
+    <div class="form-group col-md-6">
+      <input
+        class="form-control"
+        name="LastName"
+        #LastName="ngModel"
+        [(ngModel)]="userService.loggedInUser.LastName"
+        placeholder="LastName"
+      />
+    </div>
+  </div>
+  <div class="form-group">
+    <input
+      class="form-control"
+      name="UserName"
+      #UserName="ngModel"
+      [(ngModel)]="userService.loggedInUser.UserName"
+      placeholder="UserName"
+    />
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <input
+        class="form-control"
+        name="Email"
+        #Email="ngModel"
+        [(ngModel)]="userService.loggedInUser.Email"
+        placeholder="Email"
+      />
+    </div>
+    <div class="form-group col-md-6">
+      <input
+        class="form-control"
+        name="userRole"
+        #userRole="ngModel"
+        [(ngModel)]="userService.loggedInUser.userRole"
+        placeholder="User Type"
+      />
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <button type="submit" class="btn btn-lg btn-block btn-primary">
+        Edit
+      </button>
+    </div>
+    <div class="form-group col-md-4">
+      <button type="button" class="btn btn-lg btn-block btn-danger" (click)="resetForm(userForm)">
+        Reset
+      </button>
+    </div>
+  </div>
+</form>

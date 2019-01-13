@@ -6,6 +6,9 @@ import { ActivatedRoute, Router } from "@angular/router";
 import * as moment from "moment";
 import { NewEvent } from "../../models/newEvent";
 import { DepartmentService } from "../../services/department.service";
+import { Events } from "../../models/events.model";
+import { AuthService } from "../../services/auth.service";
+import { ToastrService } from "ngx-toastr";
 //import { NewEventService } from '../../services/new-event.service';
 
 @Component({
@@ -14,86 +17,194 @@ import { DepartmentService } from "../../services/department.service";
   styleUrls: ["./day-calendar.component.css"]
 })
 export class DayCalendarComponent implements OnInit {
-  departments;
-  departmentName: number;
+  currentUserId: string;
+  userEvent: Events;
+  //userEvent={};
+  departments: string[];
+  //departmentName: string;
+  appointmentId: number;
   title: string;
   start: string;
   end: string;
+  //currentStart: string;
   description: string;
-  departmentFor: number;
+  departmentFor: string;
+  backgroundColor: string;
   userId: string;
   newEvent: NewEvent;
   clickedDate: string[];
+  startDate: string[];
+  endDate: string[];
   appointmentCreateEventSuccessful: boolean = false;
   appointmentEditEventSuccessful: boolean = false;
   getDateClicked: string; //property holding parameters coming from home calendar
+  getDepartmentId: string; //property holding department Id coming from home calendar
   dayCalendarOptions: Options;
   @ViewChild(CalendarComponent) ucCalendarDay: CalendarComponent;
 
   constructor(
+    private toastrService: ToastrService,
     private deptService: DepartmentService,
     private eventService: EventService,
+    private authService: AuthService,
     //private newEventService: NewEventService,
     private activatedRoute: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    //localStorage.setItem('userId', this.userClaims.UserId);
+    this.currentUserId = localStorage.getItem("userId");
+    console.log(this.currentUserId);
+    this.userEvent = {
+      id: "",
+      userId: "",
+      title: "",
+      start: null,
+      end: null,
+      backgroundColour: "",
+      description: "",
+      departmentId: ""
+    };
+  }
 
   ngOnInit() {
-    this.departmentName = -1;
-    this.deptService.getAllDepartments().subscribe((data: any) => {
-      //console.log("entered getdepartments");
-      this.departments = data;
-      //console.log(data);
-    });
-    //getting route parameter
+    //this.departmentName = "-1";
+    //this.currentStart = "";
+
+    //for getting all departments in modal dropdown
+    // this.deptService.getAllDepartments().subscribe((data: any) => {
+    //   this.departments = data;
+    //   //console.log(data);
+    // });
+
+    //getting required parameter from the route
     this.activatedRoute.paramMap.subscribe(params => {
-      //console.log(params);
       this.getDateClicked = params.get("date");
-      //console.log(this.getDateClicked);
     });
 
-    this.eventService.getAllAppointments().subscribe((data: any) => {
-      //console.log(data);
-      this.dayCalendarOptions = {
-        defaultDate: this.getDateClicked,
-        defaultView: "agendaDay",
-        slotEventOverlap: false,
-        allDaySlot: false,
-        header: {
-          left: "title",
-          center: "",
-          right: "prev,next today"
-        },
-        selectable: true,
-        selectHelper: true,
-        slotDuration: moment.duration("00:30:00"),
-        minTime: moment.duration("08:00:00"),
-        maxTime: moment.duration("14:10:00"),
-
-        events: data
-        //selectable: true,
-        // selectHelper: true
-      };
+    //getting query parameters from the route
+    this.activatedRoute.queryParamMap.subscribe(queryPrams => {
+      this.getDepartmentId = queryPrams.get("departmentId");
+      //console.log(this.getDepartmentId);
     });
+
+    //for getting department details
+    this.deptService
+      .getDepartmentDetails(this.getDepartmentId)
+      .subscribe((data: any) => {
+        this.departments = data;
+        //console.log(data + "department data");
+      });
+
+    //loading calender and filling all appointments by departments
+    this.eventService
+      .getAllAppointmentsByDepartment(this.getDepartmentId)
+      .subscribe((eventdata: any) => {
+        //console.log(eventdata);
+        this.dayCalendarOptions = {
+          //
+          editable: true,
+          isRTL: true,
+          locale: "ar-sa",
+          buttonText: {
+            today: "اليوم"
+          },
+          defaultDate: this.getDateClicked,
+          defaultView: "agendaDay",
+          slotEventOverlap: false,
+          allDaySlot: false,
+          header: {
+            left: "prev,next today",
+            center: "title",
+            right: ""
+          },
+          selectable: true,
+          selectHelper: true,
+          slotDuration: moment.duration("00:30:00"),
+          minTime: moment.duration("08:00:00"),
+          maxTime: moment.duration("14:10:00"),
+
+          events: eventdata
+        };
+
+        if (this.ucCalendarDay != undefined) {
+          this.ucCalendarDay.eventsModel = eventdata;
+
+          this.ucCalendarDay.fullCalendar("rerenderEvents");
+        }
+      });
   }
+
   confirmDelete() {
     if (confirm("هل أنت متأكد من حذف الموقع ؟")) {
-      alert("Done.");
+      this.appointmentId = parseInt(this.userEvent.id);
+      this.eventService
+        .deleteAppointment(this.appointmentId)
+        .subscribe((data: any) => {
+          //render calendar after delete
+          this.ucCalendarDay.fullCalendar("refetchEvents");
+          //
+          this.toastrService.success("عملية ناجحة", "Cancel Appointment", {
+            positionClass: "toast-top-left"
+          });
+          // navigating after user deletes his appointment
+          this.router.navigate(['/homeCalendar']);
+          //}
+          // else {
+          //   this.toastrService.error(data.Errors[0]);
+          // }
+        });
+      //alert("Done.");
       this.appointmentEditEventSuccessful = !this
         .appointmentEditEventSuccessful;
     } else {
-      alert("No.");
+      //alert("No.");
       this.appointmentEditEventSuccessful = !this
         .appointmentEditEventSuccessful;
     }
   }
+
+  OnEditSubmit(title: string, description: string) {
+    this.userId = this.userEvent.userId;
+    this.departmentFor = this.getDepartmentId;
+    //console.log(this.departmentFor);
+    this.appointmentId = parseInt(this.userEvent.id);
+
+    this.eventService
+      .updateAppointment(
+        this.appointmentId,
+        title,
+        this.userEvent.backgroundColour,
+        description,
+        this.departmentFor,
+        this.userId
+      )
+      .subscribe((data: any) => {
+        //console.log(data);
+        this.appointmentEditEventSuccessful = false;
+        this.ucCalendarDay.fullCalendar(
+          "renderEvent",
+          {
+            title: data[0].title,
+            start: data[0].start,
+            end: data[0].end,
+            backgroundColor: data[0].backgroundColor
+          },
+          true
+        );
+        this.toastrService.success("تم تأكيد الموعد", "Appointment Confirmed", {
+          positionClass: "toast-top-left"
+        });
+        this.router.navigate(['/homeCalendar']);
+      });
+  }
+
   OnSubmit(title: string, description: string) {
-    //console.log(title);
-    this.start = this.clickedDate.toString();
-    this.end = this.clickedDate.toString();
-    this.departmentFor = this.departmentName;
+    this.start = this.startDate.toString();
+    this.end = this.endDate.toString();
+    this.departmentFor = this.getDepartmentId;
+    //console.log(this.departmentFor);
     this.userId = localStorage.getItem("userId");
-    console.log(this.userId);
+    //console.log(this.userId);
     this.eventService
       .insertAppointment(
         title,
@@ -103,84 +214,104 @@ export class DayCalendarComponent implements OnInit {
         this.departmentFor,
         this.userId
       )
-      .subscribe((data: any) => {
-        console.log(data);
-        //localStorage.clear();
+      .subscribe((data: any) => {    
         //yaha per ek property true karo jisse modal ko hide kar saken
         this.appointmentCreateEventSuccessful = true;
-        localStorage.setItem("appointment", data);
-        //console.log(localStorage.getItem('appointment'));
-        // this.router.navigate(["/homeCalendar"]);
+
+        //this.router.navigate(["/homeCalendar"]);
         // debugger;
-        //console.log(this);
-        // this.ucCalendarDay.fullCalendar()
+        //console.log(data + "submit insert event");
         this.ucCalendarDay.fullCalendar(
           "renderEvent",
           {
             title: data.appointmentTitle,
             start: data.appointmentStartDate,
-            end: data.appointmentEndDate
+            end: data.appointmentEndDate,
+            userId: data.userId
+            //backgroundColor: data.appointmentbgcolour
           },
           true
         );
-        this.eventService.getAllAppointments().subscribe((data: any) => {
-          this.eventService.allAppointments = data;
-          //console.log(data);
-          //.log(this.eventService.allAppointments);
+        this.toastrService.success("طلب موعد ناجح", "Create Appointment", {
+          positionClass: "toast-top-left"
         });
+        // this.eventService.getAllAppointments().subscribe((data: any) => {
+
+        // });
       });
+    //this.router.navigate(['/homeCalendar']);
   }
-
-  // getData(newEvent) {
-  //   this.newEvent[1].title = newEvent.title;
-  //   console.log(newEvent[1].title);
-
-  // }
-
-  getTitle(title) {
-    //console.log(title);
-  }
-
-  render2() {}
 
   dayClick(model: any) {
-    //this.clickedDate = new Date(model.date).toLocaleString('en-US').split(', ');
-    this.clickedDate = new Date(model.date)
+    //get the start date and time
+    this.startDate = new Date(model.date)
       .toLocaleString("en-US", { timeZone: "UTC" })
       .split(", ");
-    if (this.clickedDate) {
-      //console.log(this.clickedDate[0],"enterdayclick");
-      if (this.title) {
-        //console.log(this.title);
-      }
-      //console.log("no title entered");
-    }
+
+    //get the end date and time by adding 30 minutes
+    var clicked = new Date(model.date);
+    var newDateObj = moment(clicked)
+      .add(30, "m")
+      .toDate();
+    this.endDate = new Date(newDateObj)
+      .toLocaleString("en-US", { timeZone: "UTC" })
+      .split(", ");
+
+    //end of adding 30 minutes
+
+    //console.log(newDateObj);
+
+    //console.log(this.startDate + "start date");
+    //console.log(this.endDate + "end date");
   }
 
   eventClick(model: any) {
-    console.log(model);
-    //console.log(model.event.start._d);
-    if (model != null) {
-      this.appointmentEditEventSuccessful = true;
+    if (
+      this.authService.roleMatch(["SuperAdmin"]) ||
+      this.authService.roleMatch(["Admin"])
+    ) {
+      //console.log("admin or super admin");
+      if (model != null) {
+        this.userEvent.id = model.event.id;
+        this.userEvent.title = model.event.title;
+        this.userEvent.start = model.event.start;
+        // console.log(this.userEvent.start + "user event");
+        // console.log(model.event.start + "model ");
+        // console.log(model + "model");
+        this.userEvent.end = model.event.end;
+        this.userEvent.description = model.event.description;
+        this.userEvent.userId = model.event.userId;
+        this.userEvent.backgroundColour = "LimeGreen";
+        this.userEvent.departmentId = model.event.departmentFor;
+        //this.departmentName = model.event.departmentId;
+        this.appointmentEditEventSuccessful = true;
+      }
+    } else if (model.event.userId === this.currentUserId) {
+      //console.log("current user condition");
+      if (model != null) {
+        this.userEvent.id = model.event.id;
+        this.userEvent.userId = model.event.userId;
+        this.userEvent.start = model.event.start;
+        this.userEvent.end = model.event.end;
+        this.userEvent.title = model.event.title;
+        this.userEvent.departmentId = model.event.departmentFor;
+        //this.departmentName = model.event.departmentId;
+        this.userEvent.description = model.event.description;
+        this.appointmentEditEventSuccessful = true;
+      }
+    } else {
+      //console.log(this.currentUserId);
+      //console.log("toaster message showing condition");
+      this.toastrService.warning(
+        "Not Authenticated For This Process",
+        "Authentication Warning",
+        {
+          positionClass: "toast-top-left"
+        }
+      );
+      //console.log("not sa");
     }
-    model = {
-      event: {
-        id: model.event.id,
-        start: model.event.start,
-        end: model.event.end,
-        title: model.event.title,
-        allDay: model.event.allDay
-      },
-      duration: {}
-    };
-    //console.log(model.event._id);
-    // const clickedDate = new Date(model.event.start).toLocaleString('en-US').split(', ');
-    // this.router.navigate(['/dayCalendar',clickedDate[0]],
+  }
+ 
 
-    //);
-  }
-  onDepartmentSelected(val: any) {
-    this.departmentName = val;
-    console.log(this.departmentName);
-  }
 }
