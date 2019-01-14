@@ -224,7 +224,7 @@ export class HomeCalendarComponent implements OnInit {
       this.eventService
         .getAllAppointmentsByDepartment(val)
         .subscribe((eventdata: any) => {
-          //console.log(eventdata);
+          console.log(eventdata);
           this.calendarOptions = {
             editable: true,
             isRTL: true,
