@@ -12,16 +12,12 @@ import { IndexComponent } from "./CalendarComponents/index/index.component";
 import { RegisterAdminComponent } from "./SuperAdmin/register-admin/register-admin.component";
 import { ProfileComponent } from "./user/profile/profile.component";
 import { ChangePasswordComponent } from "./user/change-password/change-password.component";
-import { SelectDepartmentComponent } from "./CalendarComponents/select-department/select-department.component";
-import { WeeklyReportsComponent } from "./Reports/weekly-reports/weekly-reports.component";
-//import { MonthlyReportsComponent } from "./Reports/monthly-reports/monthly-reports.component";
 //import { RegisterComponent } from './AuthenticationComponent/register/register.component';
 
 const appRoutes: Routes = [
   { path: "", component: SignInComponent },
-  //{ path: "profile", component: ProfileComponent },
+  { path: "profile", component: ProfileComponent },
   { path: "signUp", component: SignUpComponent },
-  { path: "selectDepartment", component: SelectDepartmentComponent },
   { path: "index", component: IndexComponent },
   {
     path: "forbidden",
@@ -42,16 +38,6 @@ const appRoutes: Routes = [
   {
     path: "dayCalendar/:date",
     component: DayCalendarComponent,
-    canActivate: [AuthGuard]
-  },
-  // {
-  //   path: "reports",
-  //   component: MonthlyReportsComponent,
-  //   canActivate: [AuthGuard]
-  // },
-  {
-    path: "reports",
-    component: WeeklyReportsComponent,
     canActivate: [AuthGuard]
   },
   { path: "changPassword", component: ChangePasswordComponent },
