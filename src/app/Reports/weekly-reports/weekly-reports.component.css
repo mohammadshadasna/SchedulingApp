@@ -1,4 +1,7 @@
 @import "//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css";
-.container-padding{
-    padding-top: 5px;
+.container-padding {
+  padding-top: 5px;
+}
+.reports-table {
+  margin-bottom: 30px;
 }
