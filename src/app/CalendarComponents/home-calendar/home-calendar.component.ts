@@ -46,7 +46,7 @@ export class HomeCalendarComponent implements OnInit {
       if (this.authService.roleMatch(["Admin"])) {
         this.currentUserDepartmentId = localStorage.getItem("userDepartmentId");
         this.departmentName = this.currentUserDepartmentId
-        console.log(this.departmentName);
+        //console.log(this.departmentName);
       }
       //console.log(this.currentUserDepartmentId);
     }, 2000);
@@ -61,7 +61,7 @@ export class HomeCalendarComponent implements OnInit {
 
     //for SuperAdmin role
     if (this.authService.roleMatch(["SuperAdmin"])) {
-      console.log("entered SuperAdminCondition");
+     // console.log("entered SuperAdminCondition");
       this.onSelectingDepartment(this.departmentName);
     }
 
@@ -88,6 +88,7 @@ export class HomeCalendarComponent implements OnInit {
 
   dayClick(model: any) 
   {
+   // console.log(model);
     if (this.departmentName == '-1') {
       //console.log('enter day click when department value is -1');
       this.toastrService.warning(
@@ -103,6 +104,7 @@ export class HomeCalendarComponent implements OnInit {
 
       //get the start date and time
       var clickedDate = new Date(model);
+      //console.log(clickedDate);
       var clickedDateString = clickedDate.toLocaleString("en-US").split(", ");
 
       var todayDate = new Date();
@@ -112,7 +114,7 @@ export class HomeCalendarComponent implements OnInit {
       var todaydate = todayDateString[0];
       if (clickedDate < todayDate) {
         if (clickeddate == todaydate) {
-          console.log(this.departmentName);
+          //console.log(this.departmentName);
           this.router.navigate(["/dayCalendar", clickeddate], {
             queryParams: {
               departmentId: this.departmentName
@@ -131,7 +133,7 @@ export class HomeCalendarComponent implements OnInit {
           );
         }
       } else {
-        console.log("enter else block to show toastr message");
+        //console.log("enter else block to show toastr message");
         this.router.navigate(["/dayCalendar", clickeddate], {
           queryParams: {
             departmentId: this.departmentName
@@ -143,6 +145,7 @@ export class HomeCalendarComponent implements OnInit {
   }
 
   eventClick(model: any) {
+    //console.log(model.event.start._d);
     model = {
       event: {
         id: model.event.id,
@@ -154,29 +157,65 @@ export class HomeCalendarComponent implements OnInit {
 
       duration: {}
     };
-    //console.log(model.event.start);
-    const clickedDate = new Date(model.event.start)
-      .toLocaleString("en-US")
-      .split(", ");
-    this.router.navigate(
-      ["/dayCalendar", clickedDate[0]]
-      //to pass query parameter use below line of code
-      //{
-      //  queryParams: {
-      //    start:model.event.start
-      // model: {
-      //   event: {
-      //     id: model.event.id,
-      //     start: model.event.start,
-      //     end: model.event.end,
-      //     title: model.event.title,
-      //     allDay: model.event.allDay
-      //   },
-      // }
+    if (this.departmentName == '-1') {
+      //console.log('enter day click when department value is -1');
+      this.toastrService.warning(
+        "يرجى اختيار القسم الأول",
+        "Select Department",
+        {
+          positionClass: "toast-top-left"
+        }
+      );
+    }
+    else
+    {
 
-      // }
-      //}
-    );
+      var eventclickedDate = new Date(model.event.start._d);
+      
+      var eventClickedDateString = eventclickedDate.toLocaleString("en-US").split(", ");
+
+      var todayDate = new Date();
+      var todayDateString = todayDate.toLocaleString("en-US").split(", ");
+      //getting only date part of string
+      var clickeddate = eventClickedDateString[0];
+      //console.log(clickeddate);
+      var todaydate = todayDateString[0];
+      //console.log(todaydate);
+      if (clickeddate == todaydate){
+        //console.log('enter inside if condition when date is same');
+        this.router.navigate(["/dayCalendar", clickeddate], {
+          queryParams: {
+            departmentId: this.departmentName
+          }
+        });
+      }
+      else if (eventclickedDate < todayDate)
+      {
+        //console.log('enter inside if condition');
+          //console.log('enter inside if condition when event date is less then today date');              
+          this.toastrService.warning(
+            "Not Authenticated For This Process",
+            "Authorization Warning",
+            {
+              positionClass: "toast-top-left"
+            }
+          );
+      }
+      else
+      {
+        //console.log(' enter inside condition when event date is greater then today');
+        this.router.navigate(["/dayCalendar", clickeddate], {
+          queryParams: {
+            departmentId: this.departmentName
+          }
+        });
+      }
+    }
+    //console.log(model.event.start);
+    //const clickedDate = new Date(model.event.start)
+      //.toLocaleString("en-US")
+      //.split(", ");
+    //this.router.navigate(["/dayCalendar", clickedDate[0]]);
   }
 
   onSelectingDepartment(val: any) {
@@ -224,7 +263,7 @@ export class HomeCalendarComponent implements OnInit {
       this.eventService
         .getAllAppointmentsByDepartment(val)
         .subscribe((eventdata: any) => {
-          console.log(eventdata);
+          //console.log(eventdata);
           this.calendarOptions = {
             editable: true,
             isRTL: true,

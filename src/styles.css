@@ -357,7 +357,7 @@ end of full calendar styles*/
 textarea.form-control.text-area--sm {
   height: 100px;
 }
-.fc-content{
+.fc-content {
   color: #fff;
 }
 
@@ -371,24 +371,25 @@ textarea.form-control.text-area--sm {
   bottom: 0;
   width: 100%;
 }
-.calendar-legend{
+.calendar-legend {
   display: flex;
   flex-direction: row-reverse;
+  margin-bottom: 20px;
 }
-.calendar-legend__item{
+.calendar-legend__item {
   display: flex;
   align-items: center;
   margin-right: 20px;
 }
-.calendar-legend__color{
+.calendar-legend__color {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   margin-left: 5px;
 }
-.calendar-legend__color--new{
+.calendar-legend__color--new {
   background: #3a87ad;
 }
-.calendar-legend__color--confirmed{
+.calendar-legend__color--confirmed {
   background: limegreen;
 }

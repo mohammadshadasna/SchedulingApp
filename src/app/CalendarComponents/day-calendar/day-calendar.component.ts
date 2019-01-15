@@ -53,7 +53,7 @@ export class DayCalendarComponent implements OnInit {
   ) {
     //localStorage.setItem('userId', this.userClaims.UserId);
     this.currentUserId = localStorage.getItem("userId");
-    console.log(this.currentUserId);
+    //console.log(this.currentUserId);
     this.userEvent = {
       id: "",
       userId: "",
