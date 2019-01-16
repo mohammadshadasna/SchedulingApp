@@ -278,3 +278,73 @@
   </div>
 </div>
 <!--end of modal Event Click in day calendar-->
+
+<!--modal for rejection confirmation details-->
+<div *ngIf="appointmentDeleteEvent">
+  <div
+    class="modal fade show d-block"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div
+      class="modal-backdrop fade show"
+      (click)="appointmentDeleteEvent = !appointmentDeleteEvent"
+    ></div>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="newEvent">تعديل موعد</h4>
+          <button
+            type="button"
+            class="close"
+            (click)="
+              appointmentDeleteEvent = !appointmentDeleteEvent
+            "
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!-- <form #editModalForm="ngForm"(ngSubmit)="OnEditSubmit(title.value,departmentName.value,description.value)"> -->
+            <form #RejectModalForm="ngForm"(ngSubmit)="OnRejectSubmit(description.value)">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for=""><b>Reason For Rejection</b></label>
+                  <textarea
+                  #description="ngModel"
+                    name="description"
+                    id="description"
+                    ngModel
+                    cols="15"
+                    rows="10"
+                    class="form-control text-area--sm"
+                     required
+                  ></textarea>
+                  <div
+                    class="alert alert-danger"
+                    *ngIf="description.touched && description.invalid"
+                  >
+                  <b>الوصف مطلوب</b>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-success" type="submit" [disabled]="!RejectModalForm.valid">تؤكد</button>
+            <!-- <button class="btn btn-danger" type="button" (click)="appointmentDeleteEvent = !appointmentDeleteEvent">
+              حذف الموعد
+            </button>           -->
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end of modal for rejection confirmation details-->

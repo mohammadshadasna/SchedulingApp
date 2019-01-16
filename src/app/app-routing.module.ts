@@ -12,6 +12,8 @@ import { IndexComponent } from "./CalendarComponents/index/index.component";
 import { RegisterAdminComponent } from "./SuperAdmin/register-admin/register-admin.component";
 import { ProfileComponent } from "./user/profile/profile.component";
 import { ChangePasswordComponent } from "./user/change-password/change-password.component";
+import { WeeklyReportsComponent } from "./Reports/weekly-reports/weekly-reports.component";
+import { MonthlyReportsComponent } from "./Reports/monthly-reports/monthly-reports.component";
 //import { RegisterComponent } from './AuthenticationComponent/register/register.component';
 
 const appRoutes: Routes = [
@@ -19,6 +21,16 @@ const appRoutes: Routes = [
   { path: "profile", component: ProfileComponent },
   { path: "signUp", component: SignUpComponent },
   { path: "index", component: IndexComponent },
+  // {
+  //   path: "reports",
+  //   component: WeeklyReportsComponent,
+  //   canActivate: [AuthGuard]
+  // },
+  {
+    path: "reports",
+    component: MonthlyReportsComponent,
+    canActivate: [AuthGuard]
+  },
   {
     path: "forbidden",
     component: ForbiddenComponent,

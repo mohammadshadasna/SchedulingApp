@@ -393,3 +393,6 @@ textarea.form-control.text-area--sm {
 .calendar-legend__color--confirmed {
   background: limegreen;
 }
+.table-pager .pagination {
+  float: left;
+}

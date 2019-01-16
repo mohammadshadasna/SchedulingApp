@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { CustomFormsModule } from "ng2-validation";
 import { HttpClientModule } from "@angular/common/http";
-import { DataTableModule } from 'angular-6-datatable';
+import { DataTableModule } from "angular-6-datatable";
 
 import { FullCalendarModule } from "ng-fullcalendar";
 import { AppComponent } from "./app.component";
@@ -34,7 +34,8 @@ import { GeneralLoadingComponent } from "./common/general-loading/general-loadin
 import { ChangePasswordComponent } from "./user/change-password/change-password.component";
 import { FooterComponent } from "./common/footer/footer.component";
 import { SelectDepartmentComponent } from "./CalendarComponents/select-department/select-department.component";
-import { WeeklyReportsComponent } from './Reports/weekly-reports/weekly-reports.component';
+import { WeeklyReportsComponent } from "./Reports/weekly-reports/weekly-reports.component";
+import { ReportService } from "./services/report.service";
 //import { RegisterComponent } from './AuthenticationComponent/register/register.component';
 
 @NgModule({
@@ -80,7 +81,8 @@ import { WeeklyReportsComponent } from './Reports/weekly-reports/weekly-reports.
     NewEventService,
     UserService,
     AuthService,
-    DepartmentService
+    DepartmentService,
+    ReportService
   ]
 })
 export class AppModule {}

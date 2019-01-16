@@ -19,13 +19,14 @@ import { ToastrService } from "ngx-toastr";
 export class DayCalendarComponent implements OnInit {
   currentUserId: string;
   userEvent: Events;
-  //userEvent={};
+  //rejectionDescription: string;
   departments: string[];
   //departmentName: string;
   appointmentId: number;
   title: string;
   start: string;
   end: string;
+  departmentId: number;
   //currentStart: string;
   description: string;
   departmentFor: string;
@@ -37,6 +38,7 @@ export class DayCalendarComponent implements OnInit {
   endDate: string[];
   appointmentCreateEventSuccessful: boolean = false;
   appointmentEditEventSuccessful: boolean = false;
+  appointmentDeleteEvent: boolean = false;
   getDateClicked: string; //property holding parameters coming from home calendar
   getDepartmentId: string; //property holding department Id coming from home calendar
   dayCalendarOptions: Options;
@@ -67,14 +69,6 @@ export class DayCalendarComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.departmentName = "-1";
-    //this.currentStart = "";
-
-    //for getting all departments in modal dropdown
-    // this.deptService.getAllDepartments().subscribe((data: any) => {
-    //   this.departments = data;
-    //   //console.log(data);
-    // });
 
     //getting required parameter from the route
     this.activatedRoute.paramMap.subscribe(params => {
@@ -121,7 +115,7 @@ export class DayCalendarComponent implements OnInit {
           selectHelper: true,
           slotDuration: moment.duration("00:30:00"),
           minTime: moment.duration("08:00:00"),
-          maxTime: moment.duration("14:10:00"),
+          maxTime: moment.duration("14:00:00"),
 
           events: eventdata
         };
@@ -134,33 +128,29 @@ export class DayCalendarComponent implements OnInit {
       });
   }
 
+  OnRejectSubmit(description: string){
+    //console.log(description);
+    console.log(this.departmentId);
+    this.eventService.deleteAppointment(this.appointmentId,this.userId,this.departmentId,description).subscribe((data :any)=>{
+      this.toastrService.success("عملية ناجحة", "Appointment Rejection", {
+        positionClass: "toast-top-left"
+      });
+      this.router.navigate(['/homeCalendar']);
+    });
+    this.appointmentDeleteEvent = !this
+        .appointmentDeleteEvent;
+  }
+
   confirmDelete() {
-    if (confirm("هل أنت متأكد من حذف الموقع ؟")) {
+    
+      this.appointmentDeleteEvent = true;
       this.appointmentId = parseInt(this.userEvent.id);
-      this.eventService
-        .deleteAppointment(this.appointmentId)
-        .subscribe((data: any) => {
-          //render calendar after delete
-          this.ucCalendarDay.fullCalendar("refetchEvents");
-          //
-          this.toastrService.success("عملية ناجحة", "Cancel Appointment", {
-            positionClass: "toast-top-left"
-          });
-          // navigating after user deletes his appointment
-          this.router.navigate(['/homeCalendar']);
-          //}
-          // else {
-          //   this.toastrService.error(data.Errors[0]);
-          // }
-        });
-      //alert("Done.");
+      this.departmentId = parseInt(this.getDepartmentId);
+      this.userId = this.userEvent.userId;
+      //console.log(this.departmentId);
       this.appointmentEditEventSuccessful = !this
         .appointmentEditEventSuccessful;
-    } else {
-      //alert("No.");
-      this.appointmentEditEventSuccessful = !this
-        .appointmentEditEventSuccessful;
-    }
+    
   }
 
   OnEditSubmit(title: string, description: string) {
@@ -168,7 +158,11 @@ export class DayCalendarComponent implements OnInit {
     this.departmentFor = this.getDepartmentId;
     //console.log(this.departmentFor);
     this.appointmentId = parseInt(this.userEvent.id);
-
+    //:totdo if user is not admin then only update data not send email to him..yani ek aur update banayenge web api me jisme mail send nahi karenge
+    if (
+      this.authService.roleMatch(["SuperAdmin"]) ||
+      this.authService.roleMatch(["Admin"])
+    ){
     this.eventService
       .updateAppointment(
         this.appointmentId,
@@ -187,6 +181,7 @@ export class DayCalendarComponent implements OnInit {
             title: data[0].title,
             start: data[0].start,
             end: data[0].end,
+            description: data[0].description,
             backgroundColor: data[0].backgroundColor
           },
           true
@@ -196,6 +191,37 @@ export class DayCalendarComponent implements OnInit {
         });
         this.router.navigate(['/homeCalendar']);
       });
+    }
+    else{
+      this.eventService
+      .updateAppointmentByUser(
+        this.appointmentId,
+        title,
+        //this.userEvent.backgroundColour,
+        description,
+        this.departmentFor,
+        this.userId
+      )
+      .subscribe((data: any) => {
+        //console.log(data);
+        this.appointmentEditEventSuccessful = false;
+        this.ucCalendarDay.fullCalendar(
+          "renderEvent",
+          {
+            title: data[0].title,
+            start: data[0].start,
+            end: data[0].end,
+            description: data[0].description,
+            //backgroundColor: data[0].backgroundColor
+          },
+          true
+        );
+        this.toastrService.success("تم تأكيد الموعد", "Appointment Updated", {
+          positionClass: "toast-top-left"
+        });
+        this.router.navigate(['/homeCalendar']);
+      });
+    }
   }
 
   OnSubmit(title: string, description: string) {
@@ -220,13 +246,14 @@ export class DayCalendarComponent implements OnInit {
 
         //this.router.navigate(["/homeCalendar"]);
         // debugger;
-        //console.log(data + "submit insert event");
+        console.log(data.appointmentDescription + "submit insert event");
         this.ucCalendarDay.fullCalendar(
           "renderEvent",
           {
             title: data.appointmentTitle,
             start: data.appointmentStartDate,
             end: data.appointmentEndDate,
+            description: data.appointmentDescription,
             userId: data.userId
             //backgroundColor: data.appointmentbgcolour
           },
@@ -270,33 +297,29 @@ export class DayCalendarComponent implements OnInit {
       this.authService.roleMatch(["SuperAdmin"]) ||
       this.authService.roleMatch(["Admin"])
     ) {
-      //console.log("admin or super admin");
       if (model != null) {
         this.userEvent.id = model.event.id;
         this.userEvent.title = model.event.title;
         this.userEvent.start = model.event.start;
-        // console.log(this.userEvent.start + "user event");
-        // console.log(model.event.start + "model ");
-        // console.log(model + "model");
         this.userEvent.end = model.event.end;
         this.userEvent.description = model.event.description;
         this.userEvent.userId = model.event.userId;
         this.userEvent.backgroundColour = "LimeGreen";
         this.userEvent.departmentId = model.event.departmentFor;
-        //this.departmentName = model.event.departmentId;
         this.appointmentEditEventSuccessful = true;
       }
     } else if (model.event.userId === this.currentUserId) {
       //console.log("current user condition");
       if (model != null) {
         this.userEvent.id = model.event.id;
-        this.userEvent.userId = model.event.userId;
+        this.userEvent.title = model.event.title;
         this.userEvent.start = model.event.start;
         this.userEvent.end = model.event.end;
-        this.userEvent.title = model.event.title;
+        this.userEvent.description = model.event.description;
+        this.userEvent.userId = model.event.userId;                        
         this.userEvent.departmentId = model.event.departmentFor;
         //this.departmentName = model.event.departmentId;
-        this.userEvent.description = model.event.description;
+        //this.userEvent.description = model.event.description;
         this.appointmentEditEventSuccessful = true;
       }
     } else {
